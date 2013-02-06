@@ -17,11 +17,11 @@ class JustMe(object):
         CREATE TABLE {}(
             id integer primary key autoincrement unique not null
             ,
-            moment text not null # when do you call lock() or unlock() ?
+            moment text not null -- when do you call lock() or unlock() ?
             ,
-            type text not null # "lock" or "unlock"
+            type text not null -- "lock" or "unlock"
             ,
-            pid integer not null # process id
+            pid integer not null -- process id
         );
     '''.format(TABLE_NAME)
     LOCK_FILE_PATH = os.path.join(tempfile.gettempdir(), 'just_me.lock')
