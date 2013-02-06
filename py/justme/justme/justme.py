@@ -108,13 +108,6 @@ class JustMe(object):
             'type': type_,
             'pid': self._pid,
         }
-        keys = tuple(d.keys())
-        values = tuple(d.values())
-        hatenas = ', '.join('?' * len(values))
-        d_sql = {
-            'KEYS': keys,
-            'VALUES': '({})'.format(hatenas),
-        }
 
         fmt = ("insert into {0}(id, moment, type, pid) "
                "values({id}, '{moment}', '{type}', {pid})")
