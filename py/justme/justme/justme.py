@@ -55,9 +55,16 @@ class JustMe(object):
         """delete lock file"""
         os.remove(self._db_path)
 
-    def dump_db(self):
-        """see method name"""
-        rows = self._cur.execute('select * from {}'.format(JustMe.TABLE_NAME))
+    def dump_db(self, limit=0):
+        """dump db order by id desc.
+        And set limit records of number."""
+        sql = 'select * from {} order by id desc'.format(JustMe.TABLE_NAME)
+        if limit:
+            sql += ' limit {}'.format(limit)
+
+      # print('sql =')
+      # print(sql)
+        rows = self._cur.execute(sql)
         column_names = tuple(map(lambda x: x[0], self._cur.description))
         print(column_names)
         for row in rows.fetchall():
@@ -173,6 +180,6 @@ if __name__ == '__main__':
   # time.sleep(5)       #
   # my_just_me.unlock() #
 
-    my_just_me.dump_db()
+    my_just_me.dump_db(limit=10)
 
   # my_just_me.clean() # if need.
