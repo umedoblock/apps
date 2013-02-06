@@ -91,7 +91,19 @@ class JustMe(object):
                 raise raiz
 
         if error_message:
+            last_record = self.get_last_record()
+            column_names = tuple(map(lambda x: x[0], self._cur.description))
+            print('last record is')
+            print(column_names)
+            print(last_record)
             raise CannotRun(error_message)
+
+    def get_last_record(self):
+        """get last record"""
+        fmt = 'select * from {0} where id = (select max(id) from {0})'
+        sql = fmt.format(JustMe.TABLE_NAME)
+        last_record = self._cur.execute(sql).fetchone()
+        return last_record
 
     def _unlock(self):
         """release lock instance"""
