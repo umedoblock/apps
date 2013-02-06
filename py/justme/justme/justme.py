@@ -116,13 +116,6 @@ class JustMe(object):
             print(last_record)
             raise CannotRun(error_message)
 
-    def get_last_record(self):
-        """get last record"""
-        fmt = 'select * from {0} where id = (select max(id) from {0})'
-        sql = fmt.format(JustMe.TABLE_NAME)
-        last_record = self._cur.execute(sql).fetchone()
-        return last_record
-
     def _unlock(self):
         """release lock instance"""
         self._conn.isolation_level = 'IMMEDIATE'
