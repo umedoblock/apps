@@ -78,9 +78,9 @@ class JustMe(object):
         """
 
         error_message = ''
-        sql, values = self._make_sql('lock')
+        sql = self._make_sql('lock')
         try:
-            self._cur.execute(sql, values)
+            self._cur.execute(sql)
             # NEVER self._conn.commit() in _lock()
         except sqlite3.OperationalError as raiz:
             if raiz.args[0] == 'database is locked':
@@ -95,15 +95,15 @@ class JustMe(object):
 
     def _unlock(self):
         """release lock instance"""
-        sql, values = self._make_sql('unlock')
-        self._cur.execute(sql, values)
+        sql = self._make_sql('unlock')
+        self._cur.execute(sql)
         self._conn.commit()
 
     def _make_sql(self, type_):
         """make sql sentence for lock/unlock"""
         now = datetime.datetime.now().isoformat()
         d = {
-            'id': None,
+            'id': 'NULL',
             'moment': now,
             'type': type_,
             'pid': self._pid,
@@ -116,12 +116,13 @@ class JustMe(object):
             'VALUES': '({})'.format(hatenas),
         }
 
-        fmt = 'insert into {0}{KEYS} values{VALUES}'
-        sql = fmt.format(JustMe.TABLE_NAME, **d_sql)
+        fmt = ("insert into {0}(id, moment, type, pid) "
+               "values({id}, '{moment}', '{type}', {pid})")
+        sql = fmt.format(JustMe.TABLE_NAME, **d)
       # print('sql =')
       # print(sql)
 
-        return sql, values
+        return sql
 
     def __enter__(self):
         """automatic lock()"""
