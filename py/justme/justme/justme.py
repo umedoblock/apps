@@ -9,7 +9,7 @@ class CannotRun(Exception):
 
 class JustMe(object):
     """Prohibit to run two process/instance at same time.
-    to use a transaction behavior via sqlite3.
+    To use a transaction behavior via sqlite3.
     """
 
     TABLE_NAME = 'just_me'
