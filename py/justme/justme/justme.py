@@ -13,6 +13,8 @@ class JustMe(object):
     """
 
     TABLE_NAME = 'just_me'
+    _MAIN = TABLE_NAME + '_MAIN'
+    _PRELIMINARY = TABLE_NAME + '_PRELIMINARY'
     CREATE_TABLE = '''
         CREATE TABLE {}(
             id integer primary key autoincrement unique not null
@@ -23,7 +25,8 @@ class JustMe(object):
             ,
             pid integer not null -- process id
         );
-    '''.format(TABLE_NAME)
+    '''
+    CREATE_TABLES = (CREATE_TABLE * 2).format(self._MAIN, self._PRELIMINARY)
     LOCK_FILE_PATH = os.path.join(tempfile.gettempdir(), 'just_me.lock')
 
     def __init__(self,
@@ -55,10 +58,10 @@ class JustMe(object):
         """delete lock file"""
         os.remove(self._db_path)
 
-    def dump_db(self, limit=0):
+    def dump_db(self, table_name, limit=0):
         """dump db order by id desc.
         And set limit records of number."""
-        sql = 'select * from {} order by id desc'.format(JustMe.TABLE_NAME)
+        sql = 'select * from {} order by id desc'.format(table_name)
         if limit:
             sql += ' limit {}'.format(limit)
 
@@ -73,22 +76,35 @@ class JustMe(object):
     def _create_db(self):
         """see method name"""
         try:
-            self._cur.execute(JustMe.CREATE_TABLE)
+            self._cur.execute(self.CREATE_TABLES)
         except sqlite3.OperationalError as raiz:
-            message = 'table {} already exists'.format(JustMe.TABLE_NAME)
+            message = 'table {} already exists'.format(self._MAIN)
             if raiz.args[0] != message:
                 raise raiz
 
-    def _lock(self):
-        """acquire lock instance.
-           if you cannot lock, raise CannotRun()
-        """
+    def _insert_to_lock(self, table_name):
+        """construct sql to insert."""
+
+        # http://www.sqlite.org/lang_transaction.html
+        # END TRANSACTION is an alias for COMMIT.
+        # Transactions created using BEGIN...COMMIT do not nest.
+        # sqlite> begin exclusive;
+        # sqlite> begin immediate;
+        # sqlite> begin deferred;
+        # sqlite> end;
+        if table_name == self._PRELIMINARY:
+            # auto commit
+            self._conn.isolation_level = None
+        else:
+            self._conn.isolation_level = 'IMMEDIATE'
 
         error_message = ''
-        sql = self._make_sql('lock')
+        sql = self._make_sql('lock', table_name)
+        # insert into just_me_MAIN(id, moment, type, pid)
+        #             values(NULL, '2013-02-06T20:54:48.135445', 'lock', 1);
         try:
             self._cur.execute(sql)
-            # NEVER self._conn.commit() in _lock()
+            # NEVER self._conn.commit() in lock()
         except sqlite3.OperationalError as raiz:
             if raiz.args[0] == 'database is locked':
                 error_message = \
@@ -98,27 +114,34 @@ class JustMe(object):
                 raise raiz
 
         if error_message:
-            last_record = self.get_last_record()
-            column_names = tuple(map(lambda x: x[0], self._cur.description))
-            print('last record is')
-            print(column_names)
-            print(last_record)
+            self.dump_db(self._PRELIMINARY, limit=0)
             raise CannotRun(error_message)
 
-    def get_last_record(self):
+    def _lock(self):
+        """acquire lock instance.
+           if you cannot lock, raise CannotRun()
+        """
+
+        self._insert_to_lock(self._PRELIMINARY)
+        self._insert_to_lock(self._MAIN)
+
+    def get_last_record(self, table_name):
         """get last record"""
         fmt = 'select * from {0} where id = (select max(id) from {0})'
-        sql = fmt.format(JustMe.TABLE_NAME)
+        sql = fmt.format(table_name)
         last_record = self._cur.execute(sql).fetchone()
         return last_record
 
     def _unlock(self):
         """release lock instance"""
-        sql = self._make_sql('unlock')
+        sql = self._make_sql('unlock', self._MAIN)
+        # insert into just_me_MAIN(id, moment, type, pid)
+        #             values(NULL, '2013-02-06T20:59:33.135445', 'unlock', 2);
+        self._conn.isolation_level = 'IMMEDIATE'
         self._cur.execute(sql)
         self._conn.commit()
 
-    def _make_sql(self, type_):
+    def _make_sql(self, type_, table_name):
         """make sql sentence for lock/unlock"""
         now = datetime.datetime.now().isoformat()
         d = {
@@ -130,7 +153,7 @@ class JustMe(object):
 
         fmt = ("insert into {0}(id, moment, type, pid) "
                "values({id}, '{moment}', '{type}', {pid})")
-        sql = fmt.format(JustMe.TABLE_NAME, **d)
+        sql = fmt.format(table_name, **d)
       # print('sql =')
       # print(sql)
 
@@ -180,6 +203,6 @@ if __name__ == '__main__':
   # time.sleep(5)       #
   # my_just_me.unlock() #
 
-    my_just_me.dump_db(limit=10)
+    my_just_me.dump_db(MyJustMe.MAIN, .limit=10)
 
   # my_just_me.clean() # if need.
