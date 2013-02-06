@@ -123,6 +123,14 @@ class JustMe(object):
 
         return sql, values
 
+    def __enter__(self):
+        """automatic lock()"""
+        self.lock()
+
+    def __exit__(self, *args):
+        """automatic unlock()"""
+        self.unlock()
+
 if __name__ == '__main__':
 
     class MyJustMe(JustMe):
@@ -151,9 +159,13 @@ if __name__ == '__main__':
             print('{0} pid={1} unlocked.'.format(now, self._pid))
 
     my_just_me = MyJustMe(script_name='MyJustMe')
-    my_just_me.lock()
-    time.sleep(5)
-    my_just_me.unlock()
+
+    with my_just_me:
+        time.sleep(5)
+
+  # my_just_me.lock()   # equal to above with sentence.
+  # time.sleep(5)       #
+  # my_just_me.unlock() #
 
     my_just_me.dump_db()
 
