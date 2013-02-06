@@ -84,8 +84,19 @@ class JustMe(object):
            if you cannot lock, raise CannotRun()
         """
 
+        self._insert_to_lock('prelock')
+        self._insert_to_lock('lock')
+
+    def _insert_to_lock(self, type_):
+        if type_ == 'lock':
+            self._conn.isolation_level = 'IMMEDIATE'
+        elif type_ == 'prelock':
+            self._conn.isolation_level = None
+        else:
+            ValueError('unkown type_ "{}"'.format(type_))
+
         error_message = ''
-        sql = self._make_sql('lock')
+        sql = self._make_sql(type_)
         try:
             self._cur.execute(sql)
             # NEVER self._conn.commit() in _lock()
@@ -114,6 +125,7 @@ class JustMe(object):
 
     def _unlock(self):
         """release lock instance"""
+        self._conn.isolation_level = 'IMMEDIATE'
         sql = self._make_sql('unlock')
         self._cur.execute(sql)
         self._conn.commit()
