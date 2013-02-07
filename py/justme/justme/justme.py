@@ -13,7 +13,7 @@ class JustMe(object):
     """
 
     TABLE_NAME = 'just_me'
-    CREATE_TABLE = '''
+    _CREATE_TABLE = '''
         CREATE TABLE {}(
             id integer primary key autoincrement unique not null
             ,
@@ -23,10 +23,11 @@ class JustMe(object):
             ,
             pid integer not null -- process id
         );
-    '''.format(TABLE_NAME)
+    '''
+    # JustMe._make_lock_db_path() combine DIR_NAME and BASE_NAME.
+    # of course you can change above two xxx_NAME.
     DIR_NAME = tempfile.gettempdir()
     BASE_NAME = 'just_me_lock.db'
-    LOCK_DB_PATH = os.path.join(DIR_NAME, BASE_NAME)
 
     def __init__(self,
                  script_name='"JustMe"',
@@ -36,7 +37,7 @@ class JustMe(object):
 
         self.script_name = script_name
         if not lock_db_path:
-            lock_db_path = self.LOCK_DB_PATH
+            lock_db_path = self._make_lock_db_path()
         self.lock_db_path = lock_db_path
         self.pid = os.getpid()
 
@@ -62,7 +63,7 @@ class JustMe(object):
     def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
         And set limit records of number."""
-        sql = 'select * from {} '.format(JustMe.TABLE_NAME)
+        sql = 'select * from {} '.format(self.TABLE_NAME)
         if where:
             sql += 'where {} '.format(where)
         sql += 'order by id desc'
@@ -82,10 +83,12 @@ class JustMe(object):
 
     def _create_db(self):
         """see method name"""
+
+        sql = JustMe._CREATE_TABLE.format(self.TABLE_NAME)
         try:
-            self._cur.execute(JustMe.CREATE_TABLE)
+            self._cur.execute(sql)
         except sqlite3.OperationalError as raiz:
-            message = 'table {} already exists'.format(JustMe.TABLE_NAME)
+            message = 'table {} already exists'.format(self.TABLE_NAME)
             if raiz.args[0] != message:
                 raise raiz
 
@@ -144,11 +147,15 @@ class JustMe(object):
 
         fmt = ("insert into {0}(id, moment, type, pid) "
                "values({id}, '{moment}', '{type}', {pid})")
-        sql = fmt.format(JustMe.TABLE_NAME, **d)
+        sql = fmt.format(self.TABLE_NAME, **d)
       # print('sql =')
       # print(sql)
 
         return sql
+
+    def _make_lock_db_path(self):
+        lock_db_path = os.path.join(self.DIR_NAME, self.BASE_NAME)
+        return lock_db_path
 
     def __enter__(self):
         """automatic lock()"""
@@ -162,6 +169,12 @@ if __name__ == '__main__':
 
     class MyJustMe(JustMe):
         """how to inherit the JustMe class"""
+
+        TABLE_NAME = 'my_just_me'
+        DIR_NAME = os.path.expanduser('~')
+        BASE_NAME = 'my_just_me_lock.db'
+        # If MyJustMe(lock_db_path=''), JustMe._make_lock_db_path() combine
+        # DIR_NAME and BASE_NAME
 
         def lock(self):
             """you should change this method in inherited class.
@@ -185,6 +198,7 @@ if __name__ == '__main__':
             now = datetime.datetime.now().isoformat()
             print('{0} pid={1} unlocked.'.format(now, self.pid))
 
+    # MyJustMe(script_name='MyJustMe', lock_db_path='/path/to/dir/lock.db')
     my_just_me = MyJustMe(script_name='MyJustMe')
 
     with my_just_me:

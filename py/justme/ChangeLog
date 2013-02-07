@@ -1,5 +1,6 @@
 Changes in 1.1.0 (7 Feb 2013)
 - publish JustMe.pid, JustMe.lock_db_path.
+- publish JustMe.DIR_NAME, JustMe.BASE_NAME.
 - when JustMe is already running, you can know pid which probably do lock().
 - rename JustMe.LOCK_FILE_PATH to JustMe.LOCK_DB_PATH.
 - default JustMe.LOCK_DB_PATH basename is "just_me_lock.db".
