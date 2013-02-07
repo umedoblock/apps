@@ -10,6 +10,8 @@ class CannotRun(Exception):
 class JustMe(object):
     """Prohibit to run two process/instance at same time.
     To use a transaction behavior via sqlite3.
+    Developver DO change lock_db_path, table_name.
+    Developver DO NOT change justme table structure.
     """
 
     TABLE_NAME = 'just_me'
@@ -19,7 +21,7 @@ class JustMe(object):
             ,
             moment text not null -- when do you call lock() or unlock() ?
             ,
-            type text not null -- "lock" or "unlock"
+            type text not null -- "lock", "unlock" or "prelock"
             ,
             pid integer not null -- process id
         );
@@ -57,8 +59,13 @@ class JustMe(object):
         self._unlock()
 
     def clean(self):
-        """delete lock file"""
+        """delete lock db"""
         os.remove(self.lock_db_path)
+
+    def exercise(self, remains=10):
+        """reduce record to remains of num."""
+        self._delete(remains)
+        self._vacuum()
 
     def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
@@ -157,6 +164,16 @@ class JustMe(object):
         lock_db_path = os.path.join(self.DIR_NAME, self.BASE_NAME)
         return lock_db_path
 
+    def _delete(self, remains):
+        self._conn.execute('''
+            delete from {0} where id
+                not in (select id from {0} order by id desc limit {1});
+        '''.format(self.TABLE_NAME, remains))
+
+    def _vacuum(self):
+        """vacuum lock db"""
+        self._conn.execute('vacuum')
+
     def __enter__(self):
         """automatic lock()"""
         self.lock()
@@ -212,4 +229,11 @@ if __name__ == '__main__':
     for row in dumped:
         print(row)
 
+  # my_just_me.exercise(remains=5) # if need.
   # my_just_me.clean() # if need.
+
+  # reproduction.
+  # for i in `seq 30` ; do
+  #     echo i=$i;
+  #     python3 ./justme/justme.py;
+  # done
