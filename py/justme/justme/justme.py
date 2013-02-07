@@ -28,16 +28,16 @@ class JustMe(object):
 
     def __init__(self,
                  script_name='"JustMe"',
-                 db_path=LOCK_FILE_PATH,
+                 lock_file_path=LOCK_FILE_PATH,
                  ):
         """initilize attributes and create database to lock database."""
 
         self.script_name = script_name
-        self._db_path = db_path
+        self._lock_file_path = lock_file_path
         self._pid = os.getpid()
 
         # for transaction
-        self._conn = sqlite3.connect(self._db_path,
+        self._conn = sqlite3.connect(self._lock_file_path,
                                      timeout=0,
                                      isolation_level='IMMEDIATE')
         self._cur = self._conn.cursor()
@@ -53,7 +53,7 @@ class JustMe(object):
 
     def clean(self):
         """delete lock file"""
-        os.remove(self._db_path)
+        os.remove(self._lock_file_path)
 
     def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
