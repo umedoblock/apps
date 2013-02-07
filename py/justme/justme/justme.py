@@ -55,20 +55,26 @@ class JustMe(object):
         """delete lock file"""
         os.remove(self._db_path)
 
-    def dump_db(self, limit=0):
+    def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
         And set limit records of number."""
-        sql = 'select * from {} order by id desc'.format(JustMe.TABLE_NAME)
+        sql = 'select * from {} '.format(JustMe.TABLE_NAME)
+        if where:
+            sql += 'where {} '.format(where)
+        sql += 'order by id desc'
         if limit:
-            sql += ' limit {}'.format(limit)
+            sql += ' limit {} '.format(limit)
 
+        dumped = []
       # print('sql =')
       # print(sql)
         rows = self._cur.execute(sql)
         column_names = tuple(map(lambda x: x[0], self._cur.description))
-        print(column_names)
+        dumped.append(column_names)
         for row in rows.fetchall():
-            print(row)
+            dumped.append(row)
+
+        return dumped
 
     def _create_db(self):
         """see method name"""
@@ -91,6 +97,7 @@ class JustMe(object):
         if type_ == 'lock':
             self._conn.isolation_level = 'IMMEDIATE'
         elif type_ == 'prelock':
+            # auto commit
             self._conn.isolation_level = None
         else:
             ValueError('unkown type_ "{}"'.format(type_))
@@ -104,17 +111,15 @@ class JustMe(object):
             if raiz.args[0] == 'database is locked':
                 error_message = \
                     ('Another process/instance of '
-                     '{0} is already running.'.format(self.script_name))
+                     '{0} is already running.\n'.format(self.script_name))
             else:
                 raise raiz
 
         if error_message:
-            last_record = self.get_last_record()
-            column_names = tuple(map(lambda x: x[0], self._cur.description))
-            print('last record is')
-            print(column_names)
-            print(last_record)
-            raise CannotRun(error_message)
+            dumped = \
+                my_just_me.dump_db(limit=10, where='type = \'prelock\'')
+            dumped_str = '\n'.join([str(row) for row in dumped])
+            raise CannotRun(error_message + dumped_str)
 
     def _unlock(self):
         """release lock instance"""
@@ -185,6 +190,8 @@ if __name__ == '__main__':
   # time.sleep(5)       #
   # my_just_me.unlock() #
 
-    my_just_me.dump_db(limit=10)
+    dumped = my_just_me.dump_db(limit=10)
+    for row in dumped:
+        print(row)
 
   # my_just_me.clean() # if need.
