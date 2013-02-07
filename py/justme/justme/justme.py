@@ -24,20 +24,24 @@ class JustMe(object):
             pid integer not null -- process id
         );
     '''.format(TABLE_NAME)
-    LOCK_FILE_PATH = os.path.join(tempfile.gettempdir(), 'just_me.lock')
+    DIR_NAME = tempfile.gettempdir()
+    BASE_NAME = 'just_me_lock.db'
+    LOCK_DB_PATH = os.path.join(DIR_NAME, BASE_NAME)
 
     def __init__(self,
                  script_name='"JustMe"',
-                 lock_file_path=LOCK_FILE_PATH,
+                 lock_db_path='',
                  ):
         """initilize attributes and create database to lock database."""
 
         self.script_name = script_name
-        self._lock_file_path = lock_file_path
+        if not lock_db_path:
+            lock_db_path = self.LOCK_DB_PATH
+        self._lock_db_path = lock_db_path
         self._pid = os.getpid()
 
         # for transaction
-        self._conn = sqlite3.connect(self._lock_file_path,
+        self._conn = sqlite3.connect(self._lock_db_path,
                                      timeout=0,
                                      isolation_level='IMMEDIATE')
         self._cur = self._conn.cursor()
@@ -53,7 +57,7 @@ class JustMe(object):
 
     def clean(self):
         """delete lock file"""
-        os.remove(self._lock_file_path)
+        os.remove(self._lock_db_path)
 
     def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
