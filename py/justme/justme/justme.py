@@ -37,11 +37,11 @@ class JustMe(object):
         self.script_name = script_name
         if not lock_db_path:
             lock_db_path = self.LOCK_DB_PATH
-        self._lock_db_path = lock_db_path
-        self._pid = os.getpid()
+        self.lock_db_path = lock_db_path
+        self.pid = os.getpid()
 
         # for transaction
-        self._conn = sqlite3.connect(self._lock_db_path,
+        self._conn = sqlite3.connect(self.lock_db_path,
                                      timeout=0,
                                      isolation_level='IMMEDIATE')
         self._cur = self._conn.cursor()
@@ -57,7 +57,7 @@ class JustMe(object):
 
     def clean(self):
         """delete lock file"""
-        os.remove(self._lock_db_path)
+        os.remove(self.lock_db_path)
 
     def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
@@ -139,7 +139,7 @@ class JustMe(object):
             'id': 'NULL',
             'moment': now,
             'type': type_,
-            'pid': self._pid,
+            'pid': self.pid,
         }
 
         fmt = ("insert into {0}(id, moment, type, pid) "
@@ -167,23 +167,23 @@ if __name__ == '__main__':
             """you should change this method in inherited class.
             """
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} trying lock().'.format(now, self._pid))
+            print('{0} pid={1} trying lock().'.format(now, self.pid))
 
             super().lock()
 
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} locked.'.format(now, self._pid))
+            print('{0} pid={1} locked.'.format(now, self.pid))
 
         def unlock(self):
             """you should change this method in inherited class.
             """
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} trying unlock().'.format(now, self._pid))
+            print('{0} pid={1} trying unlock().'.format(now, self.pid))
 
             super().unlock()
 
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} unlocked.'.format(now, self._pid))
+            print('{0} pid={1} unlocked.'.format(now, self.pid))
 
     my_just_me = MyJustMe(script_name='MyJustMe')
 
