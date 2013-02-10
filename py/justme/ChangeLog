@@ -1,3 +1,8 @@
+Changes in 1.1.1 (10 Feb 2013)
+- use named placement to make sql.
+- make _SQL, _make_parameters().
+- delete _make_sql().
+
 Changes in 1.1.0 (7 Feb 2013)
 - publish JustMe.pid, JustMe.lock_db_path.
 - publish JustMe.DIR_NAME, JustMe.BASE_NAME.

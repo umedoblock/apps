@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(
     name='justme',
     packages=['justme'],
-    version='1.1.0',
+    version='1.1.1',
     description='Prohibit to run two process/instance at same time.',
     author='梅どぶろく(umedoblock)',
     author_email='umedoblock@gmail.com',
