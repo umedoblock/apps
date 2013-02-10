@@ -30,7 +30,7 @@ class JustMe(object):
     # of course you can change above two xxx_NAME.
     DIR_NAME = tempfile.gettempdir()
     BASE_NAME = 'just_me_lock.db'
-    _SQL_TEMPLATE = (""
+    _SQL = (""
         "insert into {table_name}"
         "(id, moment, type, pid) "
         "values(:id, :moment, :type, :pid) "
@@ -48,7 +48,7 @@ class JustMe(object):
         self.lock_db_path = lock_db_path
         self.pid = os.getpid()
 
-        self._sql = self._SQL_TEMPLATE.format(**{'table_name': self.TABLE_NAME})
+        self._sql = self._SQL.format(**{'table_name': self.TABLE_NAME})
 
         # for transaction
         self._conn = sqlite3.connect(self.lock_db_path,
