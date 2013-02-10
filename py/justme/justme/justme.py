@@ -117,9 +117,9 @@ class JustMe(object):
             ValueError('unkown type_ "{}"'.format(type_))
 
         error_message = ''
-        sql = self._make_sql(type_)
+        sql, parameters = self._make_sql(type_)
         try:
-            self._cur.execute(sql)
+            self._cur.execute(sql, parameters)
             # NEVER self._conn.commit() in _lock()
         except sqlite3.OperationalError as raiz:
             if raiz.args[0] == 'database is locked':
@@ -138,27 +138,29 @@ class JustMe(object):
     def _unlock(self):
         """release lock instance"""
         self._conn.isolation_level = 'IMMEDIATE'
-        sql = self._make_sql('unlock')
-        self._cur.execute(sql)
+        sql, parameters = self._make_sql('unlock')
+        self._cur.execute(sql, parameters)
         self._conn.commit()
 
     def _make_sql(self, type_):
         """make sql sentence for lock/unlock"""
         now = datetime.datetime.now().isoformat()
-        d = {
-            'id': 'NULL',
+        parameters = {
+            'id': None,
             'moment': now,
             'type': type_,
             'pid': self.pid,
         }
 
-        fmt = ("insert into {0}(id, moment, type, pid) "
-               "values({id}, '{moment}', '{type}', {pid})")
-        sql = fmt.format(self.TABLE_NAME, **d)
+        sql = ("insert into {0}(id, moment, type, pid) "
+               "values(:id, :moment, :type, :pid)"
+               "".format(self.TABLE_NAME))
       # print('sql =')
       # print(sql)
+      # print('parameters =')
+      # print(parameters)
 
-        return sql
+        return sql, parameters
 
     def _make_lock_db_path(self):
         lock_db_path = os.path.join(self.DIR_NAME, self.BASE_NAME)
