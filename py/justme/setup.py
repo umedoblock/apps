@@ -37,6 +37,6 @@ setup(
 | -------
 | 
 | Prohibit to run two process/instance at same time.
-| to use a transaction behavior via sqlite3.
+| To use a transaction behavior via sqlite3.
 ''',
      )
