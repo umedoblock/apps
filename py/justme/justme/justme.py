@@ -16,7 +16,7 @@ class JustMe(object):
 
     TABLE_NAME = 'just_me'
     _CREATE_TABLE = '''
-        CREATE TABLE {}(
+        CREATE TABLE {table_name} (
             id integer primary key autoincrement unique not null
             ,
             moment text not null -- when do you call lock() or unlock() ?
@@ -26,11 +26,11 @@ class JustMe(object):
             pid integer not null -- process id
         );
     '''
-    _SQL = (""
-        "insert into {table_name} "
-        "(id, moment, type, pid) "
-        "values(:id, :moment, :type, :pid) "
-    "")
+    _SQL = '''
+        insert into {table_name}
+        (id, moment, type, pid)
+        values(:id, :moment, :type, :pid)
+    '''
 
     # JustMe._make_lock_db_path() combine DIR_NAME and BASE_NAME.
     # of course you can change above two xxx_NAME.
@@ -99,11 +99,11 @@ class JustMe(object):
     def _create_db(self):
         """see method name"""
 
-        sql = JustMe._CREATE_TABLE.format(self.TABLE_NAME)
+        sql = JustMe._CREATE_TABLE.format(**{'table_name': self.TABLE_NAME})
         try:
             self._cur.execute(sql)
         except sqlite3.OperationalError as raiz:
-            message = 'table {} already exists'.format(self.TABLE_NAME)
+            message = 'table {0} already exists'.format(self.TABLE_NAME)
             if raiz.args[0] != message:
                 raise raiz
 
