@@ -30,6 +30,11 @@ class JustMe(object):
     # of course you can change above two xxx_NAME.
     DIR_NAME = tempfile.gettempdir()
     BASE_NAME = 'just_me_lock.db'
+    _SQL_TEMPLATE = (""
+        "insert into {table_name}"
+        "(id, moment, type, pid) "
+        "values(:id, :moment, :type, :pid) "
+    "")
 
     def __init__(self,
                  script_name='"JustMe"',
@@ -42,6 +47,8 @@ class JustMe(object):
             lock_db_path = self._make_lock_db_path()
         self.lock_db_path = lock_db_path
         self.pid = os.getpid()
+
+        self._sql = self._SQL_TEMPLATE.format(**{'table_name': self.TABLE_NAME})
 
         # for transaction
         self._conn = sqlite3.connect(self.lock_db_path,
@@ -152,9 +159,7 @@ class JustMe(object):
             'pid': self.pid,
         }
 
-        sql = ("insert into {0}(id, moment, type, pid) "
-               "values(:id, :moment, :type, :pid)"
-               "".format(self.TABLE_NAME))
+        sql = self._sql
       # print('sql =')
       # print(sql)
       # print('parameters =')
