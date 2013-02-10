@@ -124,9 +124,9 @@ class JustMe(object):
             ValueError('unkown type_ "{}"'.format(type_))
 
         error_message = ''
-        sql, parameters = self._make_sql(type_)
+        parameters = self._make_parameters(type_)
         try:
-            self._cur.execute(sql, parameters)
+            self._cur.execute(self._sql, parameters)
             # NEVER self._conn.commit() in _lock()
         except sqlite3.OperationalError as raiz:
             if raiz.args[0] == 'database is locked':
@@ -145,11 +145,11 @@ class JustMe(object):
     def _unlock(self):
         """release lock instance"""
         self._conn.isolation_level = 'IMMEDIATE'
-        sql, parameters = self._make_sql('unlock')
-        self._cur.execute(sql, parameters)
+        parameters = self._make_parameters('unlock')
+        self._cur.execute(self._sql, parameters)
         self._conn.commit()
 
-    def _make_sql(self, type_):
+    def _make_parameters(self, type_):
         """make sql sentence for lock/unlock"""
         now = datetime.datetime.now().isoformat()
         parameters = {
@@ -159,13 +159,14 @@ class JustMe(object):
             'pid': self.pid,
         }
 
-        sql = self._sql
+      # sql = self._sql
       # print('sql =')
       # print(sql)
+
       # print('parameters =')
       # print(parameters)
 
-        return sql, parameters
+        return parameters
 
     def _make_lock_db_path(self):
         lock_db_path = os.path.join(self.DIR_NAME, self.BASE_NAME)
