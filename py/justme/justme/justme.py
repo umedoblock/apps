@@ -26,15 +26,16 @@ class JustMe(object):
             pid integer not null -- process id
         );
     '''
+    _SQL = (""
+        "insert into {table_name} "
+        "(id, moment, type, pid) "
+        "values(:id, :moment, :type, :pid) "
+    "")
+
     # JustMe._make_lock_db_path() combine DIR_NAME and BASE_NAME.
     # of course you can change above two xxx_NAME.
     DIR_NAME = tempfile.gettempdir()
     BASE_NAME = 'just_me_lock.db'
-    _SQL = (""
-        "insert into {table_name}"
-        "(id, moment, type, pid) "
-        "values(:id, :moment, :type, :pid) "
-    "")
 
     def __init__(self,
                  script_name='"JustMe"',
