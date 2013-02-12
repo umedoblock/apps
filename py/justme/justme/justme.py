@@ -36,7 +36,7 @@ class JustMe(object):
             ,
             moment text not null -- when do you call lock() or unlock() ?
             ,
-            type text not null -- "lock", "unlock" or "prelock"
+            type text not null check(type in ("lock", "unlock", "prelock"))
             ,
             pid integer not null -- process id
         );
