@@ -21,26 +21,56 @@ msgid ""
 "Prohibit to run two process/instance at same time.\n"
 "    To use a transaction behavior via sqlite3.\n"
 "    Developver DO change lock_db_path, table_name.\n"
-"    Developver DO NOT change justme table structure.\n"
+"    Developver DO NOT change just_me table structure.\n"
 "    "
-msgstr "同時に二つ以上の起動を防止します。"
+msgstr "Python script の同時起動を防止します。\n"
+"    同時起動を防止するために、sqlite3 の transaction を利用しています。\n"
+"    開発者の方が継承先で変更するのは、lock_db_path, table_name となります。\n"
+"    開発者の方は、just_me table 構造を変更しないようにして下さい。\n"
 
 #: ./justme/justme.py:45
 #, docstring
 msgid "initilize attributes and create database to lock database."
-msgstr "属性の初期化とlockする為のdatabase作成を行います。"
+msgstr "属性の初期化とlock用databaseの作成を行います。"
 
 #: ./justme/justme.py:63 ./justme/justme.py:67 ./justme/justme.py:101
 #, docstring
-msgid "see method name"
+msgid "see method name."
 msgstr "method名を見ろ。"
+
+#: ./justme/justme.py:71
+#, docstring
+msgid "delete lock db."
+msgstr "lock db file をdisk上から削除します。"
 
 #: ./justme/justme.py:79
 msgid "reduce record to remains of num."
-msgstr "record 件数が remains 件 となるように、record 件数を減らします。"
+msgstr ""
+"db の残りの record 数が remains 件 となるように、\n"
+"record を削除します。"
+
+#: ./justme/justme.py:80
+#, docstring
+msgid ""
+"dump db order by id desc.\n"
+"        And set limit records of number.\n"
+"        And you can write a where clause.\n"
+"        "
+msgstr ""
+"db の内容を id の値で昇順に並び替え、表示します。\n"
+"表示する件数をlimit=Nとして指定することも可能です。\n"
+"where 句を指定することも可能です。"
+
+#: ./justme/justme.py:112
+#, docstring
+msgid ""
+"acquire lock instance.\n"
+"        if you cannot lock, raise CannotRun().\n"
+"        "
+msgstr "lockを試します。lock出来ない場合、CannotRun()の例外が発生します。"
 
 #: ./justme/justme.py:125
-msgid "unkown type_ \"{}\""
+msgid "unkown type_ \"{}\"."
 msgstr "\"{}\" は、想定していない type_ です。"
 
 #: ./justme/justme.py:135
@@ -48,9 +78,41 @@ msgid ""
 "Another process/instance of {0} is already running.\n"
 msgstr "他の {0} が既に起動しています。\n"
 
+#: ./justme/justme.py:148
+#, docstring
+msgid "release lock instance."
+msgstr "lockを解除します。"
+
+#: ./justme/justme.py:155
+#, docstring
+msgid "make sql sentence for lock/unlock."
+msgstr "lock/unlock/prelock/で必要となるsql分を作成します。"
+
+#: ./justme/justme.py:184
+#, docstring
+msgid "vacuum lock db."
+msgstr "lock db に vacuum を実行します。"
+
+#: ./justme/justme.py:188
+#, docstring
+msgid "automatic lock()."
+msgstr "自動的にlock()を実行します。"
+
+#: ./justme/justme.py:192
+#, docstring
+msgid "automatic unlock()."
+msgstr "自動的にunlock()を実行します。"
+
 #: ./justme/justme.py:202
-msgid "how to inherit the JustMe class"
-msgstr "どうやって JustMe class を継承するか。"
+msgid "How to inherit the JustMe class."
+msgstr "どうやって JustMe class を継承するかを示します。"
+
+#: ./justme/justme.py:213 ./justme/justme.py:224
+#, docstring
+msgid ""
+"you should change this method in inherited class.\n"
+"            "
+msgstr "継承先のclassでこのmethodを変更して下さい。"
 
 #: ./justme/justme.py:209
 msgid "{0} pid={1} trying lock()."
@@ -58,7 +120,7 @@ msgstr "{0} pid={1} が、lock() を試します。"
 
 #: ./justme/justme.py:214
 msgid "{0} pid={1} locked."
-msgstr "{0} pid={1} が、閉めました。"
+msgstr "{0} pid={1} が、lock() に成功しました。"
 
 #: ./justme/justme.py:220
 msgid "{0} pid={1} trying unlock()."
@@ -66,5 +128,5 @@ msgstr "{0} pid={1} が、unlock()を試します。"
 
 #: ./justme/justme.py:225
 msgid "{0} pid={1} unlocked."
-msgstr "{0} pid={1} が、開けました。"
+msgstr "{0} pid={1} が、unlock()に成功しました。"
 

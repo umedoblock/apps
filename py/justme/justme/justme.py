@@ -16,7 +16,7 @@ class JustMe(object):
     """Prohibit to run two process/instance at same time.
     To use a transaction behavior via sqlite3.
     Developver DO change lock_db_path, table_name.
-    Developver DO NOT change justme table structure.
+    Developver DO NOT change just_me table structure.
     """
 
     # 難しく考えすぎだった。失敗。
@@ -74,15 +74,15 @@ class JustMe(object):
         self._create_db()
 
     def lock(self):
-        """see method name"""
+        """see method name."""
         self._lock()
 
     def unlock(self):
-        """see method name"""
+        """see method name."""
         self._unlock()
 
     def clean(self):
-        """delete lock db"""
+        """delete lock db."""
         os.remove(self.lock_db_path)
 
     def exercise(self, remains=10):
@@ -92,7 +92,9 @@ class JustMe(object):
 
     def dump_db(self, limit=0, where=''):
         """dump db order by id desc.
-        And set limit records of number."""
+        And set limit records of number.
+        And you can write a where clause.
+        """
         sql = 'select * from {} '.format(self.TABLE_NAME)
         if where:
             sql += 'where {} '.format(where)
@@ -112,7 +114,7 @@ class JustMe(object):
         return dumped
 
     def _create_db(self):
-        """see method name"""
+        """see method name."""
 
         sql = JustMe._CREATE_TABLE.format(**{'table_name': self.TABLE_NAME})
         try:
@@ -124,7 +126,7 @@ class JustMe(object):
 
     def _lock(self):
         """acquire lock instance.
-           if you cannot lock, raise CannotRun()
+        if you cannot lock, raise CannotRun().
         """
 
         self._insert_to_lock('prelock')
@@ -137,7 +139,7 @@ class JustMe(object):
             # auto commit
             self._conn.isolation_level = None
         else:
-            ValueError(_('unkown type_ "{}"').format(type_))
+            ValueError(_('unkown type_ "{}".').format(type_))
 
         error_message = ''
         parameters = self._make_parameters(type_)
@@ -159,14 +161,14 @@ class JustMe(object):
             raise CannotRun(error_message + dumped_str)
 
     def _unlock(self):
-        """release lock instance"""
+        """release lock instance."""
         self._conn.isolation_level = 'IMMEDIATE'
         parameters = self._make_parameters('unlock')
         self._cur.execute(self._sql, parameters)
         self._conn.commit()
 
     def _make_parameters(self, type_):
-        """make sql sentence for lock/unlock"""
+        """make sql sentence for lock/unlock."""
         now = datetime.datetime.now().isoformat()
         parameters = {
             'id': None,
@@ -199,11 +201,11 @@ class JustMe(object):
         self._conn.execute('vacuum')
 
     def __enter__(self):
-        """automatic lock()"""
+        """automatic lock()."""
         self.lock()
 
     def __exit__(self, *args):
-        """automatic unlock()"""
+        """automatic unlock()."""
         self.unlock()
 
 #   class JustMe(builtins.object)
@@ -237,7 +239,7 @@ del attr
 if __name__ == '__main__':
 
     class MyJustMe(JustMe):
-        """how to inherit the JustMe class"""
+        """How to inherit the JustMe class."""
 
         TABLE_NAME = 'my_just_me'
         DIR_NAME = os.path.expanduser('~')
