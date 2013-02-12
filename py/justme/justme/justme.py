@@ -207,6 +207,23 @@ class JustMe(object):
 #    できたっ！
 # JustMe.lock.__doc__ = '日本語で上書き'
 
+# 現在の __doc__ を msgid として引っ張ってきておいて、
+# _(msgid) として、gettext()経由の文字列にしてから、
+# __doc__を上書きする。
+# これで、docstringを国際化することが出来る。
+# for I18N docstring
+
+def I18N(attr):
+    if callable(attr):
+        msgid = getattr(attr, '__doc__')
+        msgstr = _(msgid)
+        setattr(attr, '__doc__', msgstr)
+
+for attr in JustMe.__dict__.values():
+    I18N(attr)
+
+del attr
+
 if __name__ == '__main__':
 
     class MyJustMe(JustMe):
