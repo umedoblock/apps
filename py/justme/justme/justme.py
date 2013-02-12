@@ -196,6 +196,17 @@ class JustMe(object):
         """automatic unlock()"""
         self.unlock()
 
+#   class JustMe(builtins.object)
+#    ...
+#    |
+#    |  Methods defined here:
+#    ...
+#    |  lock(self)
+#    |      日本語で上書き
+#    ...
+#    できたっ！
+# JustMe.lock.__doc__ = '日本語で上書き'
+
 if __name__ == '__main__':
 
     class MyJustMe(JustMe):
