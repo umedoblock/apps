@@ -19,6 +19,16 @@ class JustMe(object):
     Developver DO NOT change justme table structure.
     """
 
+    # 難しく考えすぎだった。失敗。
+    __doc__ = _(__doc__)
+#   __doc__ = __doc__ * 100
+#   print('dir() =', dir())
+#   print(__class__)
+#   print(__name__)
+#   print(__module__.__class__)
+#   print(dir(__locals__))
+#   print(dir(__module__))
+
     TABLE_NAME = 'just_me'
     _CREATE_TABLE = '''
         CREATE TABLE {table_name} (
