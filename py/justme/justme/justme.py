@@ -3,6 +3,11 @@ import os
 import time
 import datetime
 import tempfile
+import gettext
+
+path_ = os.path.join(os.path.dirname(__file__), 'locale')
+# print('path_ =', path_)
+gettext.install('just_me', path_)
 
 class CannotRun(Exception):
     pass
@@ -122,7 +127,7 @@ class JustMe(object):
             # auto commit
             self._conn.isolation_level = None
         else:
-            ValueError('unkown type_ "{}"'.format(type_))
+            ValueError(_('unkown type_ "{}"').format(type_))
 
         error_message = ''
         parameters = self._make_parameters(type_)
@@ -132,8 +137,8 @@ class JustMe(object):
         except sqlite3.OperationalError as raiz:
             if raiz.args[0] == 'database is locked':
                 error_message = \
-                    ('Another process/instance of '
-                     '{0} is already running.\n'.format(self.script_name))
+                    (_('Another process/instance of '
+                       '{0} is already running.\n').format(self.script_name))
             else:
                 raise raiz
 
@@ -206,23 +211,23 @@ if __name__ == '__main__':
             """you should change this method in inherited class.
             """
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} trying lock().'.format(now, self.pid))
+            print(_('{0} pid={1} trying lock().').format(now, self.pid))
 
             super().lock()
 
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} locked.'.format(now, self.pid))
+            print(_('{0} pid={1} locked.').format(now, self.pid))
 
         def unlock(self):
             """you should change this method in inherited class.
             """
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} trying unlock().'.format(now, self.pid))
+            print(_('{0} pid={1} trying unlock().').format(now, self.pid))
 
             super().unlock()
 
             now = datetime.datetime.now().isoformat()
-            print('{0} pid={1} unlocked.'.format(now, self.pid))
+            print(_('{0} pid={1} unlocked.').format(now, self.pid))
 
     # MyJustMe(script_name='MyJustMe', lock_db_path='/path/to/dir/lock.db')
     my_just_me = MyJustMe(script_name='MyJustMe')

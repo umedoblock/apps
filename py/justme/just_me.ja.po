@@ -1,0 +1,70 @@
+# justme
+# Copyright (C) 2013 梅どぶろく(umedoblock)
+# 梅どぶろく(umedoblock) umedoblock@gmail.com, 2013
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.1.2\n"
+"POT-Creation-Date: 2013-02-12 19:26+JST\n"
+"PO-Revision-Date: 2013-02-13 19:26+JST\n"
+"Last-Translator: 梅どぶろく(umedoblock) umedoblock@gmail.com\n"
+"Language-Team: Japanese umedoblock@gmail.com\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: ./justme/justme.py:12
+#, docstring
+msgid ""
+"Prohibit to run two process/instance at same time.\n"
+"    To use a transaction behavior via sqlite3.\n"
+"    Developver DO change lock_db_path, table_name.\n"
+"    Developver DO NOT change justme table structure.\n"
+"    "
+msgstr "同時に二つ以上の起動を防止します。"
+
+#: ./justme/justme.py:45
+#, docstring
+msgid "initilize attributes and create database to lock database."
+msgstr "属性の初期化とlockする為のdatabase作成を行います。"
+
+#: ./justme/justme.py:63 ./justme/justme.py:67 ./justme/justme.py:101
+#, docstring
+msgid "see method name"
+msgstr "method名を見ろ。"
+
+#: ./justme/justme.py:79
+msgid "reduce record to remains of num."
+msgstr "record 件数が remains 件 となるように、record 件数を減らします。"
+
+#: ./justme/justme.py:125
+msgid "unkown type_ \"{}\""
+msgstr "\"{}\" は、想定していない type_ です。"
+
+#: ./justme/justme.py:135
+msgid ""
+"Another process/instance of {0} is already running.\n"
+msgstr "他の {0} が既に起動しています。\n"
+
+#: ./justme/justme.py:202
+msgid "how to inherit the JustMe class"
+msgstr "どうやって JustMe class を継承するか。"
+
+#: ./justme/justme.py:209
+msgid "{0} pid={1} trying lock()."
+msgstr "{0} pid={1} が、lock() を試します。"
+
+#: ./justme/justme.py:214
+msgid "{0} pid={1} locked."
+msgstr "{0} pid={1} が、閉めました。"
+
+#: ./justme/justme.py:220
+msgid "{0} pid={1} trying unlock()."
+msgstr "{0} pid={1} が、unlock()を試します。"
+
+#: ./justme/justme.py:225
+msgid "{0} pid={1} unlocked."
+msgstr "{0} pid={1} が、開けました。"
+
