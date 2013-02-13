@@ -67,7 +67,7 @@ msgid ""
 "acquire lock instance.\n"
 "        if you cannot lock, raise CannotRun().\n"
 "        "
-msgstr "lockを試します。lock出来ない場合、CannotRun()の例外が発生します。"
+msgstr "lockを試します。lock出来ない場合、CannotRun 例外を発生させます。"
 
 #: ./justme/justme.py:125
 msgid "unkown type_ \"{}\"."
@@ -96,12 +96,12 @@ msgstr "lock db に vacuum を実行します。"
 #: ./justme/justme.py:188
 #, docstring
 msgid "automatic lock()."
-msgstr "自動的にlock()を実行します。"
+msgstr "自動的に lock() を実行します。"
 
 #: ./justme/justme.py:192
 #, docstring
 msgid "automatic unlock()."
-msgstr "自動的にunlock()を実行します。"
+msgstr "自動的に unlock() を実行します。"
 
 #: ./justme/justme.py:202
 msgid "How to inherit the JustMe class."
@@ -124,9 +124,9 @@ msgstr "{0} pid={1} が、lock() に成功しました。"
 
 #: ./justme/justme.py:220
 msgid "{0} pid={1} trying unlock()."
-msgstr "{0} pid={1} が、unlock()を試します。"
+msgstr "{0} pid={1} が、unlock() を試します。"
 
 #: ./justme/justme.py:225
 msgid "{0} pid={1} unlocked."
-msgstr "{0} pid={1} が、unlock()に成功しました。"
+msgstr "{0} pid={1} が、unlock() に成功しました。"
 
