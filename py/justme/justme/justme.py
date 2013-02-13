@@ -31,7 +31,7 @@ class JustMe(object):
 
     TABLE_NAME = 'just_me'
     _CREATE_TABLE = '''
-        CREATE TABLE if not exists {table_name} (
+        CREATE TABLE if NOT EXISTS {table_name} (
             id integer primary key autoincrement unique not null
             ,
             moment text not null -- when do you call lock() or unlock() ?
