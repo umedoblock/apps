@@ -7,3 +7,5 @@ README.txt
 setup.py
 justme/__init__.py
 justme/justme.py
+justme/locale/just_me.pot
+justme/locale/ja/LC_MESSAGES/just_me.mo

@@ -1,6 +1,10 @@
 Changes in 1.1.2 (13 Feb 2013)
 - I18N, 国際化対応.
+- added gettext files.
+    ./justme/locale/ja/LC_MESSAGES/just_me.mo
+    ./justme/locale/just_me.pot
 - CREATE TABLE if NOT EXISTS table_name を使用するようにした。
+- CHECK constraint to type column.
 
 Changes in 1.1.1 (10 Feb 2013)
 - use named placement to make sql.

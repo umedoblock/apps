@@ -5,8 +5,17 @@ from distutils.core import setup
 setup(
     name='justme',
     packages=['justme'],
-    version='1.1.1',
+    version='1.1.2',
     description='Prohibit to run two process/instance at same time.',
+    package_dir={'justme': 'justme'},
+    package_data={'justme': [
+                            'locale/just_me.pot',
+                            'locale/*/LC_MESSAGES/just_me.mo'
+                            ]},
+#   ./justme/locale/ja/LC_MESSAGES/just_me.mo'
+  # data_files=[
+  #     ('locale', ['justme/locale/just_me.pot']),
+  # ],
     author='梅どぶろく(umedoblock)',
     author_email='umedoblock@gmail.com',
     url='http://pypi.python.org/pypi/justme/',

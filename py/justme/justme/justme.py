@@ -197,7 +197,7 @@ class JustMe(object):
         '''.format(self.TABLE_NAME, remains))
 
     def _vacuum(self):
-        """vacuum lock db"""
+        """vacuum lock db."""
         self._conn.execute('vacuum')
 
     def __enter__(self):
@@ -234,7 +234,7 @@ def I18N(attr):
 for attr in JustMe.__dict__.values():
     I18N(attr)
 
-del attr
+del attr, path_, I18N
 
 if __name__ == '__main__':
 
