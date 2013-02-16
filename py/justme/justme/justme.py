@@ -10,8 +10,13 @@ path_ = os.path.join(os.path.dirname(__file__), 'locale')
 # print('path_ =', path_)
 gettext.install('just_me', path_)
 
+
 class CannotRun(Exception):
-    pass
+    """detect multiplu running. occured."""
+
+    # translate JustMe class docstring.
+    __doc__ = _(__doc__)
+
 
 class JustMe(object):
     """Prohibit to run two process/instance at same time.
@@ -20,15 +25,8 @@ class JustMe(object):
     Developver DO NOT change just_me table structure.
     """
 
-    # 難しく考えすぎだった。失敗。
+    # translate JustMe class docstring.
     __doc__ = _(__doc__)
-#   __doc__ = __doc__ * 100
-#   print('dir() =', dir())
-#   print(__class__)
-#   print(__name__)
-#   print(__module__.__class__)
-#   print(dir(__locals__))
-#   print(dir(__module__))
 
     TABLE_NAME = 'just_me'
     _CREATE_TABLE = '''
@@ -37,7 +35,7 @@ class JustMe(object):
             ,
             moment text not null -- when do you call lock() or unlock() ?
             ,
-            type text not null check(type in ("lock", "unlock", "prelock"))
+            type text not null check(type in ('lock', 'unlock', 'prelock'))
             ,
             pid integer not null -- process id
         );
@@ -65,7 +63,7 @@ class JustMe(object):
         self.lock_db_path = lock_db_path
         self.pid = os.getpid()
 
-        self._sql = self._SQL.format(**{'table_name': self.TABLE_NAME})
+        self._sql = self._SQL.format(table_name=self.TABLE_NAME)
 
         # for transaction
         self._conn = sqlite3.connect(self.lock_db_path,
@@ -117,7 +115,7 @@ class JustMe(object):
     def _create_db(self):
         """see method name."""
 
-        sql = JustMe._CREATE_TABLE.format(**{'table_name': self.TABLE_NAME})
+        sql = JustMe._CREATE_TABLE.format(table_name=self.TABLE_NAME)
         try:
             self._cur.execute(sql)
         except sqlite3.OperationalError as raiz:
@@ -134,6 +132,9 @@ class JustMe(object):
         self._insert_to_lock('lock')
 
     def _insert_to_lock(self, type_):
+        """Detect multiple running of JustMe through sqlite3 transaction
+        behavior when insert record to just_me table.
+        """
         if type_ == 'lock':
             self._conn.isolation_level = 'IMMEDIATE'
         elif type_ == 'prelock':
@@ -156,8 +157,11 @@ class JustMe(object):
                 raise raiz
 
         if error_message:
+            where_ = """
+                "type" = 'prelock'
+            """
             dumped = \
-                my_just_me.dump_db(limit=10, where='type = \'prelock\'')
+                my_just_me.dump_db(limit=10, where=where_)
             dumped_str = '\n'.join([str(row) for row in dumped])
             raise CannotRun(error_message + dumped_str)
 
@@ -209,24 +213,11 @@ class JustMe(object):
         """automatic unlock()."""
         self.unlock()
 
-#   class JustMe(builtins.object)
-#    ...
-#    |
-#    |  Methods defined here:
-#    ...
-#    |  lock(self)
-#    |      日本語で上書き
-#    ...
-#    できたっ！
-# JustMe.lock.__doc__ = '日本語で上書き'
-
-# 現在の __doc__ を msgid として引っ張ってきておいて、
-# _(msgid) として、gettext()経由の文字列にしてから、
-# __doc__を上書きする。
-# これで、docstringを国際化することが出来る。
-# for I18N docstring
 
 def I18N(attr):
+    """attr.__doc__ = gettext(attr.__doc__)
+    convert and translate to use gettext()."""
+
     if callable(attr):
         msgid = getattr(attr, '__doc__')
         msgstr = _(msgid)
@@ -249,8 +240,7 @@ if __name__ == '__main__':
         # DIR_NAME and BASE_NAME
 
         def lock(self):
-            """you should change this method in inherited class.
-            """
+            """you should change this method in inherited class."""
             now = datetime.datetime.now().isoformat()
             print(_('{0} pid={1} trying lock().').format(now, self.pid))
 
@@ -260,8 +250,7 @@ if __name__ == '__main__':
             print(_('{0} pid={1} locked.').format(now, self.pid))
 
         def unlock(self):
-            """you should change this method in inherited class.
-            """
+            """you should change this method in inherited class."""
             now = datetime.datetime.now().isoformat()
             print(_('{0} pid={1} trying unlock().').format(now, self.pid))
 

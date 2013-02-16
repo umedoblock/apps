@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.2\n"
 "POT-Creation-Date: 2013-02-12 19:26+JST\n"
-"PO-Revision-Date: 2013-02-13 19:26+JST\n"
+"PO-Revision-Date: 2013-02-16 21:19+JST\n"
 "Last-Translator: 梅どぶろく(umedoblock) umedoblock@gmail.com\n"
 "Language-Team: Japanese umedoblock@gmail.com\n"
 "MIME-Version: 1.0\n"
@@ -14,8 +14,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
+#, docstring
+msgid "detect multiplu running. occured."
+msgstr "多重起動検出時に発生する例外。"
 
-#: ./justme/justme.py:12
 #, docstring
 msgid ""
 "Prohibit to run two process/instance at same time.\n"
@@ -28,28 +30,23 @@ msgstr "Python script の同時起動を防止します。\n"
 "    開発者の方が継承先で変更するのは、lock_db_path, table_name となります。\n"
 "    開発者の方は、just_me table 構造を変更しないようにして下さい。\n"
 
-#: ./justme/justme.py:45
 #, docstring
 msgid "initilize attributes and create database to lock database."
 msgstr "属性の初期化とlock用databaseの作成を行います。"
 
-#: ./justme/justme.py:63 ./justme/justme.py:67 ./justme/justme.py:101
 #, docstring
 msgid "see method name."
 msgstr "method名を見ろ。"
 
-#: ./justme/justme.py:71
 #, docstring
 msgid "delete lock db."
 msgstr "lock db file をdisk上から削除します。"
 
-#: ./justme/justme.py:79
 msgid "reduce record to remains of num."
 msgstr ""
 "db の残りの record 数が remains 件 となるように、\n"
 "record を削除します。"
 
-#: ./justme/justme.py:80
 #, docstring
 msgid ""
 "dump db order by id desc.\n"
@@ -58,10 +55,10 @@ msgid ""
 "        "
 msgstr ""
 "db の内容を id の値で昇順に並び替え、表示します。\n"
-"表示する件数をlimit=Nとして指定することも可能です。\n"
-"where 句を指定することも可能です。"
+"        表示する件数をlimit=Nとして指定することも可能です。\n"
+"        where 句を指定することも可能です。\n"
+"        "
 
-#: ./justme/justme.py:112
 #, docstring
 msgid ""
 "acquire lock instance.\n"
@@ -69,64 +66,76 @@ msgid ""
 "        "
 msgstr "lockを試します。lock出来ない場合、CannotRun 例外を発生させます。"
 
-#: ./justme/justme.py:125
+#, docstring
+msgid ""
+"Detect multiple running of JustMe through sqlite3 transaction\n"
+"        behavior when insert record to just_me table.\n"
+"        "
+msgstr ""
+"record を just_me table へ insert する時に、\n"
+"        sqlite3 の transaction 機能 を使うことで、多重起動を検出します。\n"
+"        "
+
 msgid "unkown type_ \"{}\"."
 msgstr "\"{}\" は、想定していない type_ です。"
 
-#: ./justme/justme.py:135
 msgid ""
 "Another process/instance of {0} is already running.\n"
 msgstr "他の {0} が既に起動しています。\n"
 
-#: ./justme/justme.py:148
 #, docstring
 msgid "release lock instance."
 msgstr "lockを解除します。"
 
-#: ./justme/justme.py:155
 #, docstring
 msgid "make sql sentence for lock/unlock."
 msgstr "lock/unlock/prelock/で必要となるsql分を作成します。"
 
-#: ./justme/justme.py:184
 #, docstring
 msgid "vacuum lock db."
 msgstr "lock db に vacuum を実行します。"
 
-#: ./justme/justme.py:188
 #, docstring
 msgid "automatic lock()."
 msgstr "自動的に lock() を実行します。"
 
-#: ./justme/justme.py:192
 #, docstring
 msgid "automatic unlock()."
 msgstr "自動的に unlock() を実行します。"
 
-#: ./justme/justme.py:202
+#, docstring
+msgid ""
+"attr.__doc__ = gettext(attr.__doc__)\n"
+"    convert and translate to use gettext()."
+msgstr ""
+"attr.__doc__ を gettext() にて翻訳する。\n"
+"\n"
+"    attr() として attr を呼び出し可能であれば、\n"
+"    attr に結び付く __doc__ 属性を msgid とし、\n"
+"    以下を実行する。\n"
+"    msgstr = gettext(msgid)\n"
+"    実行後、attr に結びつく __doc__ 属性の値を、msgstr で上書きする。\n"
+"\n"
+"    attr() として attr を呼び出し可能でない場合、\n"
+"    何も実行しない。\n"
+"    "
+
 msgid "How to inherit the JustMe class."
 msgstr "どうやって JustMe class を継承するかを示します。"
 
-#: ./justme/justme.py:213 ./justme/justme.py:224
 #, docstring
-msgid ""
-"you should change this method in inherited class.\n"
-"            "
+msgid "you should change this method in inherited class."
 msgstr "継承先のclassでこのmethodを変更して下さい。"
 
-#: ./justme/justme.py:209
 msgid "{0} pid={1} trying lock()."
 msgstr "{0} pid={1} が、lock() を試します。"
 
-#: ./justme/justme.py:214
 msgid "{0} pid={1} locked."
 msgstr "{0} pid={1} が、lock() に成功しました。"
 
-#: ./justme/justme.py:220
 msgid "{0} pid={1} trying unlock()."
 msgstr "{0} pid={1} が、unlock() を試します。"
 
-#: ./justme/justme.py:225
 msgid "{0} pid={1} unlocked."
 msgstr "{0} pid={1} が、unlock() に成功しました。"
 
