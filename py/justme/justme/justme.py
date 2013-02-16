@@ -119,8 +119,12 @@ class JustMe(object):
         try:
             self._cur.execute(sql)
         except sqlite3.OperationalError as raiz:
+            messages = []
             message = 'table {0} already exists'.format(self.TABLE_NAME)
-            if raiz.args[0] != message:
+            messages.append(message)
+            message = 'database is locked'
+            messages.append(message)
+            if raiz.args[0] not in messages:
                 raise raiz
 
     def _lock(self):
