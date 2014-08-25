@@ -278,12 +278,12 @@ if __name__ == '__main__':
   # time.sleep(5)       #
   # my_just_me.unlock() #
 
+  # compact database colomns.
+  # my_just_me.exercise(remains=5) # if need.
+
     dumped = my_just_me.dump_db(limit=10)
     for row in dumped:
         print(row)
-
-  # my_just_me.exercise(remains=5) # if need.
-  # my_just_me.clean() # if need.
 
   # reproduction.
   # for i in `seq 30` ; do
@@ -291,4 +291,8 @@ if __name__ == '__main__':
   #     python3 ./justme/justme.py;
   # done
 
+    # close sqlite3 connection.
     my_just_me.close()
+
+  # delete sqlite3 database file.
+  # my_just_me.clean() # if need.
