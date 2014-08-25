@@ -152,6 +152,7 @@ class JustMe(object):
         try:
             self._cur.execute(self._sql, parameters)
             # NEVER self._conn.commit() in _lock()
+            # because adobe method UNLOCK the lock to do self._conn.commit().
         except sqlite3.OperationalError as raiz:
             if raiz.args[0] == 'database is locked':
                 error_message = \
