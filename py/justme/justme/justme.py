@@ -80,6 +80,10 @@ class JustMe(object):
         """see method name."""
         self._unlock()
 
+    def close(self):
+        """see method name."""
+        self._conn.close()
+
     def clean(self):
         """delete lock db."""
         os.remove(self.lock_db_path)
@@ -286,3 +290,5 @@ if __name__ == '__main__':
   #     echo i=$i;
   #     python3 ./justme/justme.py;
   # done
+
+    my_just_me.close()
