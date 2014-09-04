@@ -17,7 +17,7 @@ setup(
   # data_files=[
   #     ('locale', ['justme/locale/just_me.pot']),
   # ],
-    author='梅どぶろく(umedoblock)',
+    author='梅濁酒(umedoblock)',
     author_email='umedoblock@gmail.com',
     url='http://pypi.python.org/pypi/justme/',
     download_url='',
