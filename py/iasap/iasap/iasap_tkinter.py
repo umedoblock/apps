@@ -9,9 +9,9 @@ _parent_dir = os.path.join(os.path.dirname(_here), "..")
 # print("_parent_dir =", _parent_dir)
 sys.path.append(_parent_dir)
 
-from oneline import logger, start_logger
+from iasap import logger, start_logger
 
-class OneLineTkinter(object):
+class IasapTkinter(object):
     MAX_LENGTH = 80
     MAX_HEIGHT = 30
 
@@ -19,7 +19,7 @@ class OneLineTkinter(object):
         self.root = tkinter.Tk()
         self.used_query = ""
         self.root.option_add("*font", ("Ricty", 14))
-        self.root.title("OneLineTkinter")
+        self.root.title("IasapTkinter")
         self.ctrl_key = False
         self.need_to_search = False
 
@@ -193,5 +193,5 @@ if __name__ == "__main__":
         log_dir = ""
 
     start_logger(__file__, log_dir, logger.DEBUG)
-    olt = OneLineTkinter()
-    olt.start()
+    iat = IasapTkinter()
+    iat.start()
