@@ -7,9 +7,9 @@ import threading
 import os
 import tempfile
 
-from oneline_curses import *
+from iasap_curses import *
 
-class TestOneLineCurses(unittest.TestCase):
+class TestIasapCurses(unittest.TestCase):
     def setUp(self):
         self.f = tempfile.TemporaryFile(dir='.')
         stdin_fileno = sys.stdin.fileno()
@@ -25,13 +25,13 @@ class TestOneLineCurses(unittest.TestCase):
         self.f.close()
 
     def test_start_and_end(self):
-        ocs = OneLineCurses()
+        ocs = IasapCurses()
         self.write(b'abc')
         ocs.run(CursesLine)
 
 #   infinite loop
 #   def test_over_write(self):
-#       ocs = OneLineCurses()
+#       ocs = IasapCurses()
 #       self.write(b'abc')
 #       ocs.run(CursesLine)
 

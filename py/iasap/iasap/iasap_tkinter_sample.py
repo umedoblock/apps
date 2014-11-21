@@ -1,12 +1,12 @@
 import re
 import tkinter
 
-class OneLineTkinter(object):
+class IasapTkinter(object):
     def __init__(self):
         self.root = tkinter.Tk()
         self.ss = b''
         self.root.option_add('*font', ('Ricty', 14))
-        self.root.title('OneLineTkinter')
+        self.root.title('IasapTkinter')
 
         self.buffer = tkinter.StringVar()
         self.buffer.set(' ' * 80)
@@ -111,5 +111,5 @@ class OneLineTkinter(object):
             pass
 
 if __name__ == '__main__':
-    olt = OneLineTkinter()
+    olt = IasapTkinter()
     olt.start()
