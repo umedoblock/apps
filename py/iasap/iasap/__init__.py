@@ -40,7 +40,7 @@ def start_logger(script_name, log_dir=os.path.curdir, log_level=logger.INFO):
     logger.info(body + tail)
     logger.info(horizontal)
 
-class OneLine(object):
+class Iasap(object):
     def __init__(self, dbpath, height):
         limit = height
         self._limit = height
