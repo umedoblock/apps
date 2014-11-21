@@ -10,11 +10,11 @@ _parent_dir = os.path.join(os.path.dirname(_here), "..")
 # print("_parent_dir =", _parent_dir)
 sys.path.append(_parent_dir)
 
-from oneline import logger, start_logger
+from iasap import logger, start_logger
 
 # locale.setlocale(locale.LC_ALL, "")
 
-__all__ = ["OneLineCurses"]
+__all__ = ["IasapCurses"]
 
 if __name__ == "__main__":
     start_logger(__file__, os.path.curdir, logger.DEBUG)
@@ -106,7 +106,7 @@ class OneLineState(object):
 
         logger.debug('oneline="{}", cursor_x={}, buffer="{}" leave out _mode_emacs(keyname="{}")'.format(oneline, cursor_x, buffer, keyname))
 
-class OneLineCurses(object):
+class IasapCurses(object):
     MAX_LENGTH = 80
     MAX_HEIGHT = 30
 
@@ -265,5 +265,5 @@ class OneLineCurses(object):
         logger.debug("oneline_curses finished.")
 
 if __name__ == "__main__":
-    olc = OneLineCurses(20)
-    olc.run()
+    iac = IasapCurses(20)
+    iac.run()
