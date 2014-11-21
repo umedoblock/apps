@@ -1,4 +1,4 @@
-__all__ = ['OneLineCurses', 'OneLineTkinter']
+__all__ = ['IasapCurses', 'IasapTkinter']
 
 import sqlite3, os, sys, datetime
 import logging as _logger
@@ -6,7 +6,7 @@ import logging as _logger
 global logger
 logger = _logger
 
-from oneline.sql import GeneralSQLConnection
+from iasap.sql import GeneralSQLConnection
 
 CHARACTORS_PRINTED_PER_LINE = 79
 CPPL = CHARACTORS_PRINTED_PER_LINE
