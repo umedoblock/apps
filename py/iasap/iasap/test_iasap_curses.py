@@ -1,4 +1,4 @@
-# Copyright 2011 梅どぶろく(umedoblock)
+# Copyright 2011-2014 梅濁酒(umedoblock)
 
 import sys
 import time

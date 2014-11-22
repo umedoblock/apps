@@ -1,3 +1,5 @@
+# Copyright 2011-2014 梅濁酒(umedoblock)
+
 __all__ = ['IasapCurses', 'IasapTkinter']
 
 import sqlite3, os, sys, datetime

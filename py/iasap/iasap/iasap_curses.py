@@ -1,3 +1,5 @@
+# Copyright 2011-2014 梅濁酒(umedoblock)
+
 import curses
 import re
 import locale

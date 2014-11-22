@@ -1,3 +1,5 @@
+# Copyright 2011-2014 梅濁酒(umedoblock)
+
 import sys
 import sqlite3
 import configparser
