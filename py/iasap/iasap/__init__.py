@@ -61,7 +61,7 @@ class Iasap(object):
       # print('conn =', conn)
         self.conn = conn
 
-        _table = "eijiro"
+        _table = "eijiro98"
         self._make_sql_template(_table, limit)
 
     def get_body(self, search):

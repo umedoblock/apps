@@ -155,21 +155,21 @@ if __name__ == '__main__':
     print(dname)
     schema_path = os.path.join(dname, schema)
     config = configparser.ConfigParser()
-    config.read_file(open(schema_path), 'eijiro')
+    config.read_file(open(schema_path), 'eijiro98')
 
     path = ':memory:'
     conn = sqlite3.connect(path)
 
     conn = GeneralSQLConnection(conn)
-    conn.create_table(config['eijiro'])
+    conn.create_table(config['eijiro98'])
     for id in range(0, 4):
         column = \
             {'id': None, 'head': 'head' + str(id), 'tail': 'tail' + str(id)}
-        conn.insert('eijiro', column)
+        conn.insert('eijiro98', column)
         print('id =', id, column)
 #   conn.commit()
 
-    named_rows = conn.select('* from eijiro')
+    named_rows = conn.select('* from eijiro98')
     print('named_rows =', named_rows)
     for i, named_row in enumerate(named_rows):
         nr = named_row
