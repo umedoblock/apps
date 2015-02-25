@@ -4,6 +4,7 @@ __all__ = ['IasapCurses', 'IasapTkinter']
 
 import sqlite3, os, sys, datetime, argparse
 import logging as _logger
+import configparser
 
 global logger
 logger = _logger
@@ -78,8 +79,8 @@ __file__ = os.path.abspath(__file__)
 dirname = os.path.dirname(__file__)
 
 DEFAULTS = {
-    "conf": os.path.join(dirname, "iasap.conf"),
-    "dbpath": os.path.join(dirname, 'iasap', 'iasap.sqlite3'),
+    "conf": os.path.join(dirname, "..", "iasap.conf"),
+    "dbpath": os.path.join(dirname, "..", 'iasap.sqlite3'),
     "mode": "tkinter",
     "limit": 30,
     "debug": False,
