@@ -56,14 +56,14 @@ def _merge_kv(first, second, third={}):
     logger.debug("\n")
     return kv
 
-def _get_kv_by_conf(path):
+def _get_kv_by_conf(path, section):
     logger.debug("path =")
     logger.debug(path)
     with open(path) as f:
         config = configparser.ConfigParser()
-        config.read_file(f, 'iasap')
+        config.read_file(f, section)
     kv = {}
-    for key, value in config["iasap"].items():
+    for key, value in config[section].items():
         if value:
             kv[key] = value
     if kv["limit"]:
@@ -98,8 +98,8 @@ def merge_kv_by_defaults_and_argument(defaults=None):
     kv_tmp = _merge_kv(kv_defaults, kv_argment)
     return kv_tmp, kv_defaults, kv_argment
 
-def set_kv_for_regular(kv_defaults, kv_argment, conf_path):
-    kv_conf = _get_kv_by_conf(conf_path)
+def set_kv_for_regular(kv_defaults, kv_argment, conf_path, section):
+    kv_conf = _get_kv_by_conf(conf_path, section)
     kv = _merge_kv(kv_defaults, kv_conf, kv_argment)
     return kv
 

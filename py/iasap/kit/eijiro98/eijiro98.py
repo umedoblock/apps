@@ -25,7 +25,7 @@ from iasap import merge_kv_by_defaults_and_argument, set_kv_for_regular
 
 class Eijiro98(object):
     DEFAULTS = {
-        "conf": os.path.join(dirname, "..", "eijiro98.conf"),
+        "conf": os.path.join(dirname, "eijiro98.conf"),
         "dbpath": os.path.join(dirname, "..", 'eijiro98.sqlite3'),
         "mode": "tkinter",
         "limit": 30,
@@ -53,7 +53,7 @@ def main():
     kv_merged, kv_defaults, kv_argment = \
         merge_kv_by_defaults_and_argument(Eijiro98.DEFAULTS)
 
-    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"])
+    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"], "eijiro98")
 
     if not os.path.isfile(kv["dbpath"]):
         raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
