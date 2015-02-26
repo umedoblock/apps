@@ -2,7 +2,17 @@
 
 # Copyright 2011-2014 梅濁酒(umedoblock)
 
-import os
+import os, sys
+
+def append_parent_dir(n_up):
+    here = os.path.abspath(__file__)
+    ups = ""
+    if n_up:
+        ups = os.path.join(*([".."] * n_up))
+    _parent_dir = os.path.join(os.path.dirname(here), ups)
+    sys.path.append(_parent_dir)
+
+append_parent_dir(2)
 
 from iasap import Iasap
 from iasap.iasap_tkinter import IasapTkinter
@@ -10,7 +20,7 @@ from iasap.iasap_curses import IasapCurses
 from iasap import logger, start_logger
 from iasap import set_kv_for_conf, set_kv_for_regular
 
-class Iasap(object):
+class Eijiro98(object):
     def __init__(self, dbpath, limit, mode):
         iasap = Iasap(dbpath, limit)
         if mode == 'curses':
@@ -24,7 +34,7 @@ class Iasap(object):
         self._iasap = _iasap
 
     def start(self):
-        self._py_ol.start()
+        self._iasap.start()
 
 def main():
     start_logger(__file__, os.path.curdir, logger.DEBUG)
@@ -36,8 +46,8 @@ def main():
     if not os.path.isfile(kv["dbpath"]):
         raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
 
-    iasap = Iasap(kv["dbpath"], kv["limit"], kv["mode"])
-    iasap.start()
+    eijiro98 = Eijiro98(kv["dbpath"], kv["limit"], kv["mode"])
+    eijiro98.start()
 
 if __name__ == '__main__':
     main()
