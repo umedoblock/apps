@@ -26,7 +26,7 @@ from iasap import merge_kv_by_defaults_and_argument, set_kv_for_regular
 class Eijiro98(object):
     DEFAULTS = {
         "conf": os.path.join(dirname, "eijiro98.conf"),
-        "dbpath": os.path.join(dirname, "..", 'eijiro98.sqlite3'),
+        "dbpath": os.path.join(dirname, 'eijiro98.sqlite3'),
         "mode": "tkinter",
         "limit": 30,
         "debug": False,
