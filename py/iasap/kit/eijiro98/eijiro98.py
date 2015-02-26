@@ -33,7 +33,7 @@ class Eijiro98(object):
     }
 
     def __init__(self, dbpath, limit, mode):
-        iasap = Iasap(dbpath, limit)
+        iasap = Iasap(dbpath, "eijiro98", limit)
         if mode == 'curses':
             _iasap = IasapCurses()
         elif mode == 'tkinter':
