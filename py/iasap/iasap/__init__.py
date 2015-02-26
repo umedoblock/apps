@@ -86,15 +86,14 @@ DEFAULTS = {
     "debug": False,
 }
 
-def _set_kv_by_defaults():
-    kv = DEFAULTS
+def _set_kv_by_defaults(defaults=None):
     logger.debug("kv in _set_kv_by_defaults() =")
-    logger.debug(kv)
+    logger.debug(defaults)
     logger.debug("\n")
-    return kv
+    return defaults
 
-def set_kv_for_conf():
-    kv_defaults = _set_kv_by_defaults()
+def merge_kv_by_defaults_and_argument(defaults=None):
+    kv_defaults = _set_kv_by_defaults(defaults)
     kv_argment = _get_kv_by_argument()
     kv_tmp = _merge_kv(kv_defaults, kv_argment)
     return kv_tmp, kv_defaults, kv_argment

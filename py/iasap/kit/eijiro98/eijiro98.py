@@ -14,13 +14,24 @@ def append_parent_dir(n_up):
 
 append_parent_dir(2)
 
+__file__ = os.path.abspath(__file__)
+dirname = os.path.dirname(__file__)
+
 from iasap import Iasap
 from iasap.iasap_tkinter import IasapTkinter
 from iasap.iasap_curses import IasapCurses
 from iasap import logger, start_logger
-from iasap import set_kv_for_conf, set_kv_for_regular
+from iasap import merge_kv_by_defaults_and_argument, set_kv_for_regular
 
 class Eijiro98(object):
+    DEFAULTS = {
+        "conf": os.path.join(dirname, "..", "eijiro98.conf"),
+        "dbpath": os.path.join(dirname, "..", 'eijiro98.sqlite3'),
+        "mode": "tkinter",
+        "limit": 30,
+        "debug": False,
+    }
+
     def __init__(self, dbpath, limit, mode):
         iasap = Iasap(dbpath, limit)
         if mode == 'curses':
@@ -39,9 +50,10 @@ class Eijiro98(object):
 def main():
     start_logger(__file__, os.path.curdir, logger.DEBUG)
 
-    kv_tmp, kv_defaults, kv_argment = set_kv_for_conf()
+    kv_merged, kv_defaults, kv_argment = \
+        merge_kv_by_defaults_and_argument(Eijiro98.DEFAULTS)
 
-    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_tmp["conf"])
+    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"])
 
     if not os.path.isfile(kv["dbpath"]):
         raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
