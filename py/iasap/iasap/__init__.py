@@ -142,7 +142,7 @@ def _get_kv_by_argument():
     return kv
 
 class Iasap(object):
-    def __init__(self, dbpath, height):
+    def __init__(self, dbpath, table_name, height):
         limit = height
         self._limit = height
 
@@ -160,8 +160,7 @@ class Iasap(object):
       # print('conn =', conn)
         self.conn = conn
 
-        _table = "eijiro98"
-        self._make_sql_template(_table, limit)
+        self._make_sql_template(table_name, limit)
 
     def get_body(self, search):
         sql = self._make_sql(search)
@@ -205,8 +204,8 @@ class Iasap(object):
 
         return sql
 
-    def _make_sql_template(self, table, limit):
-        _from_where = "* from {} where".format(table)
+    def _make_sql_template(self, table_name, limit):
+        _from_where = "* from {} where".format(table_name)
         _limit = "limit {}".format(limit)
 
         self._sql_template = " ".join((_from_where, "{}", _limit))
