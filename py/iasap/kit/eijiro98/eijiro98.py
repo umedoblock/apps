@@ -38,6 +38,8 @@ class Eijiro98(object):
             _iasap = IasapCurses()
         elif mode == 'tkinter':
             _iasap = IasapTkinter()
+        elif mode == 'one-shot':
+            _iasap = iasap
         else:
             logger.debug("mode = \"{}\"".format(mode))
             raise ValueError('mode="{}" must be "curses" or "tkinter".'.format(mode))

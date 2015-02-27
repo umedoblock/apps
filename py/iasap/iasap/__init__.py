@@ -171,6 +171,12 @@ class Iasap(object):
         body = '\n'.join([text for text in self])
         return body
 
+    def start(self, search):
+        print("search: {}".format(search))
+        body = get_body(search)
+        for line in body:
+            print(line)
+
     def _do_select(self, sql):
         logger.debug('sql = "{}"'.format(sql))
         s = datetime.datetime.now()
