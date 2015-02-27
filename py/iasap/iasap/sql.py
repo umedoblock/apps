@@ -125,6 +125,8 @@ class NamedRow(object):
             result = cur.execute(sql)
             logger.info('got {} __namedtuples__ info.'.format(typename))
             row = cur.fetchone()
+            if not row:
+                raise ValueError("typename={} is not in __namedtuples__")
             field_names = row[2]
             namedtup = namedtuple(typename, field_names)
             self.__dict__[typename] = namedtup
