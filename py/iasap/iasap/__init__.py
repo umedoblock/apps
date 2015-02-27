@@ -94,7 +94,7 @@ def _set_kv_by_defaults(defaults=None):
 
 def merge_kv_by_defaults_and_argument(defaults=None):
     kv_defaults = _set_kv_by_defaults(defaults)
-    kv_argment = _get_kv_by_argument()
+    kv_argment = _get_kv_by_argument(defaults)
     kv_tmp = _merge_kv(kv_defaults, kv_argment)
     return kv_tmp, kv_defaults, kv_argment
 
@@ -103,21 +103,21 @@ def set_kv_for_regular(kv_defaults, kv_argment, conf_path, section):
     kv = _merge_kv(kv_defaults, kv_conf, kv_argment)
     return kv
 
-def _get_kv_by_argument():
+def _get_kv_by_argument(defaults=None):
     parser = argparse.ArgumentParser(description='argment.')
 
     parser.add_argument('--conf', metavar='f', dest='conf',
-                       default=DEFAULTS["conf"],
-                       help='iasap.conf path.')
+                       default=defaults["conf"],
+                       help='conf path default is {}.'.format(defaults["conf"]))
     parser.add_argument('--dbpath', metavar='f', dest='dbpath',
-                       default=DEFAULTS["dbpath"],
-                       help='sqlite dbpath default is {}'.format(DEFAULTS["dbpath"]))
+                       default=defaults["dbpath"],
+                       help='sqlite dbpath default is {}'.format(defaults["dbpath"]))
     parser.add_argument('--mode', metavar='s', dest='mode',
-                       default=DEFAULTS["mode"],
+                       default=defaults["mode"],
                        help='iasap default mode is tkinter, mode is tkinter, curses or one-shot.')
     parser.add_argument("--limit", metavar="N", dest="limit",
-                         type=int, default=DEFAULTS["limit"],
-                         help="max number of rows as select result, default is {}".format(DEFAULTS["limit"]))
+                         type=int, default=defaults["limit"],
+                         help="max number of rows as select result, default is {}".format(defaults["limit"]))
     parser.add_argument("--debug", help="debug mode switch, default is False.", action="store_true")
 
     args = parser.parse_args()
