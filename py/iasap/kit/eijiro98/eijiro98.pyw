@@ -2,7 +2,7 @@
 
 # Copyright 2011-2014 梅濁酒(umedoblock)
 
-import iasap
+import eijiro98
 
 if __name__ == '__main__':
-    iasap.main()
+    eijiro98.main()
