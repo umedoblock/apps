@@ -110,6 +110,7 @@ def _get_kv_by_argument(defaults=None):
                          type=int, default=defaults["limit"],
                          help="max number of rows as select result, default is {}".format(defaults["limit"]))
     parser.add_argument("--debug", help="debug mode switch, default is False.", action="store_true")
+    parser.add_argument('args', nargs=argparse.REMAINDER)
 
     args = parser.parse_args()
     kv = {}
@@ -127,6 +128,7 @@ def _get_kv_by_argument(defaults=None):
         if "--{}".format(k) in shell_command:
             # user 指定
             kv[k] = v
+    kv["args"] = args.args
     logger.debug("kv in _get_kv_by_argument() =")
     logger.debug(kv)
     logger.debug("\n")

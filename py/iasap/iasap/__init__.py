@@ -66,8 +66,8 @@ class Iasap(object):
 
     def start(self, search):
         logger.debug("search: {}".format(search))
-        body = get_body(search)
-        for line in body:
+        body = self.get_body(search)
+        for line in body.split("\n"):
             print(line)
 
     def _do_select(self, sql):
@@ -146,4 +146,7 @@ def main(cls, script_name, table_name):
     logger.debug("cls={}(dbpath={}, table_name={}, mode={}, limit={})".format(cls, kv["dbpath"], table_name, kv["mode"], kv["limit"]))
     iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
     logger.debug("iasap_obj = {}".format(iasap_obj))
-    iasap_obj.start()
+    if kv["mode"] == "one-shot":
+        iasap_obj.start(kv["args"][0])
+    else:
+        iasap_obj.start()
