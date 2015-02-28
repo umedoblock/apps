@@ -12,7 +12,7 @@ _parent_dir = os.path.join(os.path.dirname(_here), "..")
 # print("_parent_dir =", _parent_dir)
 sys.path.append(_parent_dir)
 
-from iasap import logger
+from iasap.lib import logger
 
 class GeneralSQLConnection(object):
     def __init__(self, conn):

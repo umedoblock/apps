@@ -12,7 +12,7 @@ _parent_dir = os.path.join(os.path.dirname(_here), "..")
 # print("_parent_dir =", _parent_dir)
 sys.path.append(_parent_dir)
 
-from iasap import logger, start_logger
+# from iasap import logger, start_logger
 
 # locale.setlocale(locale.LC_ALL, "")
 

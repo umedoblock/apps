@@ -3,45 +3,27 @@
 __all__ = ['IasapCurses', 'IasapTkinter']
 
 import sqlite3, os, sys, datetime, argparse
-import logging as _logger
 import configparser
 
-global logger
-logger = _logger
-
+from iasap.iasap_tkinter import IasapTkinter
+from iasap.iasap_curses import IasapCurses
 from iasap.sql import GeneralSQLConnection
+from iasap.lib import logger, start_logger
 
-CHARACTORS_PRINTED_PER_LINE = 79
-CPPL = CHARACTORS_PRINTED_PER_LINE
+def main(cls, table_name):
+    start_logger(__file__, os.path.curdir, logger.DEBUG)
 
-def start_logger(script_name, log_dir=os.path.curdir, log_level=logger.INFO):
-    # 通常使用時は、log_dir=os.path.curdir を想定している。
-    # log_dir が空文字であれば、log の出力先を sys.stderr に変更する。
+    kv_merged, kv_defaults, kv_argment = \
+        merge_kv_by_defaults_and_argument(cls.DEFAULTS)
 
-    basename = os.path.basename(script_name)
-    if log_dir:
-        log_base = ".".join((basename, "log"))
-        log_path = os.path.join(log_dir, log_base)
+    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"], table_name)
 
-        # http://docs.python.jp/3.4/library/logging.html#logging.basicConfig
-        # stream: 指定されたストリームを StreamHandler の初期化に使います。
-        # この引数は 'filename' と同時には使えないことに注意してください。
-        # 両方が指定されたときには ValueError が送出されます。
-        # logger.basicConfig(filename='/dev/null', level=logger.INFO)
-        # logger.basicConfig(stream=sys.stderr, level=logger.DEBUG)
-        logger.basicConfig(filename=log_path, level=log_level)
-    else:
-        logger.basicConfig(stream=sys.stderr, level=log_level)
+    if not os.path.isfile(kv["dbpath"]):
+        raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
 
-    log_prefix = "INFO:root:"
-    horizontal = "=" * (CPPL - len(log_prefix))
-    _now = datetime.datetime.now()
-    body = "{} start! at {} ".format(basename, _now)
-    tail = "=" * (CPPL - (len(log_prefix) + len(body)))
-
-    logger.info(horizontal)
-    logger.info(body + tail)
-    logger.info(horizontal)
+    iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
+    logger.debug("iasap_obj = {}".format(iasap_obj))
+    iasap_obj.start()
 
 def _merge_kv(first, second, third={}):
     kv = {}
@@ -142,7 +124,7 @@ def _get_kv_by_argument(defaults=None):
     return kv
 
 class Iasap(object):
-    def __init__(self, dbpath, table_name, height):
+    def __init__(self, dbpath, table_name, mode, height):
         limit = height
         self._limit = height
 
@@ -161,6 +143,19 @@ class Iasap(object):
         self.conn = conn
 
         self._make_sql_template(table_name, limit)
+
+        logger.debug("mode is {} in Iasap.__init__()".format(mode))
+        if mode == 'curses':
+            _iasap = IasapCurses()
+        elif mode == 'tkinter':
+            _iasap = IasapTkinter()
+        elif mode == 'one-shot':
+            _iasap = self
+        else:
+            logger.debug("mode = \"{}\"".format(mode))
+            raise ValueError('mode="{}" must be "curses" or "tkinter".'.format(mode))
+        self.get_body = _iasap.get_body
+        self.start = _iasap.start
 
     def get_body(self, search):
         sql = self._make_sql(search)
