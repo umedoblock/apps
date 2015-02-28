@@ -147,6 +147,11 @@ def main(cls, script_name, table_name):
     iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
     logger.debug("iasap_obj = {}".format(iasap_obj))
     if kv["mode"] == "one-shot":
+        if not len(kv["args"]):
+            msg = ("mode として one-shot を指定した場合は、"
+                   "one-shot の後に空白を一つ入れ、空白の後に検索語を一つ"
+                   "指定しなければなりません。")
+            raise ValueError(msg)
         iasap_obj.start(kv["args"][0])
     else:
         iasap_obj.start()
