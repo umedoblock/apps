@@ -10,21 +10,6 @@ from iasap.sql import GeneralSQLConnection
 from iasap.lib import logger, start_logger
 from iasap.lib import merge_kv_by_defaults_and_argument, set_kv_for_regular
 
-def main(cls, table_name):
-    start_logger(__file__, os.path.curdir, logger.DEBUG)
-
-    kv_merged, kv_defaults, kv_argment = \
-        merge_kv_by_defaults_and_argument(cls.DEFAULTS)
-
-    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"], table_name)
-
-    if not os.path.isfile(kv["dbpath"]):
-        raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
-
-    iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
-    logger.debug("iasap_obj = {}".format(iasap_obj))
-    iasap_obj.start()
-
 if os.path.islink(__file__):
     __file__ = os.path.realpath(__file__)
 __file__ = os.path.abspath(__file__)
@@ -148,3 +133,21 @@ class Iasap(object):
             else:
                 raise UnicodeEncodeError(*raiz.args)
         return True
+
+def main(cls, table_name):
+    start_logger(__file__, os.path.curdir, logger.DEBUG)
+
+    kv_merged, kv_defaults, kv_argment = \
+        merge_kv_by_defaults_and_argument(cls.DEFAULTS)
+
+    kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"], table_name)
+
+    if not os.path.isfile(kv["dbpath"]):
+        raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
+
+    iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
+    logger.debug("iasap_obj = {}".format(iasap_obj))
+    iasap_obj.start()
+
+if __name__ == "__main__":
+    main(Iasap, "iasap")
