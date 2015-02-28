@@ -134,8 +134,8 @@ class Iasap(object):
                 raise UnicodeEncodeError(*raiz.args)
         return True
 
-def main(cls, table_name):
-    start_logger(__file__, os.path.curdir, logger.DEBUG)
+def main(cls, script_name, table_name):
+    start_logger(script_name, os.path.curdir, logger.DEBUG)
 
     kv_merged, kv_defaults, kv_argment = \
         merge_kv_by_defaults_and_argument(cls.DEFAULTS)

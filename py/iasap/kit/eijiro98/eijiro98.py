@@ -29,4 +29,4 @@ class Eijiro98(iasap.Iasap):
     }
 
 if __name__ == '__main__':
-    iasap.main(Eijiro98, "eijiro98")
+    iasap.main(Eijiro98, os.path.basename(__file__), "eijiro98")
