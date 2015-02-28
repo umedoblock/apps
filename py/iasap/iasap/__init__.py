@@ -54,7 +54,7 @@ class Iasap(object):
         else:
             logger.debug("mode = \"{}\"".format(mode))
             raise ValueError('mode="{}" must be "curses" or "tkinter".'.format(mode))
-        self.get_body = _iasap.get_body
+        _iasap.get_body = self.get_body
         self.start = _iasap.start
 
     def get_body(self, search):
@@ -67,7 +67,7 @@ class Iasap(object):
         return body
 
     def start(self, search):
-        print("search: {}".format(search))
+        logger.debug("search: {}".format(search))
         body = get_body(search)
         for line in body:
             print(line)
@@ -145,6 +145,7 @@ def main(cls, table_name):
     if not os.path.isfile(kv["dbpath"]):
         raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
 
+    logger.debug("cls={}(dbpath={}, table_name={}, mode={}, limit={})".format(cls, kv["dbpath"], table_name, kv["mode"], kv["limit"]))
     iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
     logger.debug("iasap_obj = {}".format(iasap_obj))
     iasap_obj.start()
