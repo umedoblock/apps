@@ -105,7 +105,7 @@ def _get_kv_by_argument(defaults=None):
                        help='sqlite dbpath default is {}'.format(defaults["dbpath"]))
     parser.add_argument('--mode', metavar='s', dest='mode',
                        default=defaults["mode"],
-                       help='iasap default mode is tkinter, mode is tkinter, curses or one-shot.')
+                       help='iasap library default mode is tkinter, mode is tkinter, curses or one-shot.')
     parser.add_argument("--limit", metavar="N", dest="limit",
                          type=int, default=defaults["limit"],
                          help="max number of rows as select result, default is {}".format(defaults["limit"]))
