@@ -1,7 +1,5 @@
 # Copyright 2011-2014 梅濁酒(umedoblock)
 
-__all__ = ['IasapCurses', 'IasapTkinter']
-
 import sqlite3, os, sys, datetime
 
 from iasap.iasap_tkinter import IasapTkinter
@@ -149,6 +147,3 @@ def main(cls, script_name, table_name):
     iasap_obj = cls(kv["dbpath"], table_name, kv["mode"], kv["limit"])
     logger.debug("iasap_obj = {}".format(iasap_obj))
     iasap_obj.start()
-
-if __name__ == "__main__":
-    main(Iasap, "iasap")

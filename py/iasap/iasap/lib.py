@@ -10,6 +10,14 @@ logger = _logger
 CHARACTORS_PRINTED_PER_LINE = 79
 CPPL = CHARACTORS_PRINTED_PER_LINE
 
+def append_parent_dir(n_up):
+    here = os.path.abspath(__file__)
+    ups = ""
+    if n_up:
+        ups = os.path.join(*([".."] * n_up))
+    _parent_dir = os.path.join(os.path.dirname(here), ups)
+    sys.path.append(_parent_dir)
+
 def start_logger(script_name, log_dir=os.path.curdir, log_level=logger.INFO):
     # 通常使用時は、log_dir=os.path.curdir を想定している。
     # log_dir が空文字であれば、log の出力先を sys.stderr に変更する。
