@@ -15,7 +15,7 @@ from eijiro98 import Eijiro98
 
 start_logger(os.path.basename(__file__), os.path.curdir, logger.DEBUG)
 
-parser = argparse.ArgumentParser(description='make iasap database.')
+parser = argparse.ArgumentParser(description='make eijiro98 database.')
 
 parser.add_argument('--txtpath', metavar='f', dest='txtpath',
                     required=True,
