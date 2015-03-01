@@ -158,28 +158,27 @@ class NamedRow(object):
 
 if __name__ == '__main__':
     import os
-    schema = 'sample_table.schema'
     abs_path = os.path.abspath(__file__)
     print(abs_path)
     dname = os.path.dirname(abs_path)
     print(dname)
-    schema_path = os.path.join(dname, schema)
+    conf_path = os.path.join(dname, "iasap.conf")
     config = configparser.ConfigParser()
-    config.read_file(open(schema_path), 'eijiro98')
+    config.read_file(open(conf_path), 'iasap')
 
     path = ':memory:'
     conn = sqlite3.connect(path)
 
     conn = GeneralSQLConnection(conn)
-    conn.create_table(config['eijiro98'])
+    conn.create_table(config['schema'])
     for id in range(0, 4):
         column = \
             {'id': None, 'head': 'head' + str(id), 'tail': 'tail' + str(id)}
-        conn.insert('eijiro98', column)
+        conn.insert('iasap', column)
         print('id =', id, column)
 #   conn.commit()
 
-    named_rows = conn.select('* from eijiro98')
+    named_rows = conn.select('* from iasap')
     print('named_rows =', named_rows)
     for i, named_row in enumerate(named_rows):
         nr = named_row
