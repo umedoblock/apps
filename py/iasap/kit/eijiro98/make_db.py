@@ -13,7 +13,7 @@ from iasap.lib import start_logger, logger
 
 from eijiro98 import Eijiro98
 
-start_logger(os.path.basename(__file__), os.path.curdir, logger.DEBUG)
+start_logger(os.path.basename(__file__), os.path.curdir, logger.INFO)
 
 parser = argparse.ArgumentParser(description='make eijiro98 database.')
 
