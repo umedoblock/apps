@@ -6,7 +6,7 @@ import os
 
 import lib
 
-lib.sys_path_append_parent_dir(2)
+lib.sys_path_append_parent_dir(__file__, 2)
 
 __file__ = os.path.abspath(__file__)
 dirname = os.path.dirname(__file__)

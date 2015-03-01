@@ -7,7 +7,7 @@ import re
 import os
 
 import lib
-lib.sys_path_append_parent_dir(2)
+lib.sys_path_append_parent_dir(__file__, 2)
 from iasap.sql import GeneralSQLConnection
 from iasap.lib import start_logger, logger
 

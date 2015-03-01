@@ -5,14 +5,10 @@ import re
 import locale
 import os, sys
 
-if os.path.islink(__file__):
-    __file__ = os.path.realpath(__file__)
-_here = os.path.abspath(__file__)
-_parent_dir = os.path.join(os.path.dirname(_here), "..")
-# print("_parent_dir =", _parent_dir)
-sys.path.append(_parent_dir)
+import lib
+lib.sys_path_append_parent_dir(__file__, 1)
 
-# from iasap import logger, start_logger
+from iasap.lib import logger, start_logger
 
 # locale.setlocale(locale.LC_ALL, "")
 
