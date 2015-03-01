@@ -6,59 +6,75 @@ import configparser
 import re
 import os
 
+import lib
+lib.sys_path_append_parent_dir(2)
 from iasap.sql import GeneralSQLConnection
+from iasap.lib import start_logger, logger
 
-parser = argparse.ArgumentParser(description='python dictionary')
+from eijiro98 import Eijiro98
 
-parser.add_argument('--dicpath', metavar='f', dest='dicpath',
-                    nargs=1,
-                    default='./iasap/eijiro98.txt',
-                    help='eijiro dicpath')
+start_logger(os.path.basename(__file__), os.path.curdir, logger.DEBUG)
+
+parser = argparse.ArgumentParser(description='make iasap database.')
+
+parser.add_argument('--txtpath', metavar='f', dest='txtpath',
+                    required=True,
+                    help='eijiro98.txt path')
 parser.add_argument('--dbpath', metavar='f', dest='dbpath',
                     nargs='?',
-                    default='./iasap.sqlite3',
-                    help='sqlite dbpath')
+                    default=Eijiro98.DEFAULTS["dbpath"],
+                    help='default: eijiro98.sqlite')
 parser.add_argument('--table-name', metavar='t', dest='table_name',
-                    required=True,
                     default='eijiro98',
-                    help='table name')
-parser.add_argument('--schema', metavar='f', dest='schema',
+                    help='default table name is eijiro98.')
+parser.add_argument('--conf', metavar='f', dest='conf',
                     nargs=1,
-                    default='./iasap/eijiro98.schema',
-                    help='database schema')
+                    default=Eijiro98.DEFAULTS["conf"],
+                    help='eijiro98.conf default is {}'.format( \
+                          Eijiro98.DEFAULTS["conf"]))
 parser.add_argument('--debug', dest='debug',
                    action='store_true', default=False,
                    help='use debug ? (default: False)')
 
 args = parser.parse_args()
-dicpath = args.dicpath
-print('args.dicpath =', dicpath)
-if not dicpath:
-    raise ValueError('dicpath muse be available dicpath')
+txtpath = args.txtpath
+print('args.txtpath =', txtpath)
+if not txtpath:
+    raise ValueError('txtpath muse be available txtpath')
 dbpath = args.dbpath
 print('args.dbpath =', dbpath)
 if not dbpath:
     raise ValueError('dbpath muse be available path')
-schema = args.schema
-print('args.schema =', schema)
-if not schema:
-    raise ValueError('schema muse be available path')
+conf = args.conf
+print('args.conf =', conf)
+if not conf:
+    raise ValueError('conf muse be available path')
 
-dicpath = os.path.expanduser(dicpath)
+txtpath = os.path.expanduser(txtpath)
 dbpath = os.path.expanduser(dbpath)
-schema = os.path.expanduser(schema)
+confpath = os.path.expanduser(conf)
+
+if os.path.isfile(dbpath):
+    print("dbpath として指定した path には既に、file が存在します。")
+    print(dbpath)
+    s = input("を削除しますか？ 削除するなら、yes を入力してください。->: ")
+
+    if s.lower() == "yes":
+        os.remove(dbpath)
+    else:
+        raise ValueError("dbpath に適切な値を入力して下さい。")
 
 config = configparser.ConfigParser()
-config.read(schema)
-conn = sqlite3.connect(dbpath)
-conn = GeneralSQLConnection(conn)
+config.read(confpath)
+conn_sqlite3 = sqlite3.connect(dbpath)
+conn = GeneralSQLConnection(conn_sqlite3)
 try:
-    conn.create_table(config['eijiro98'])
+    conn.create_table(config['schema'])
 except sqlite3.OperationalError as raiz:
-    if raiz.args[0] != 'table eijiro98 already exists':
+    if raiz.args[0] != 'table {} already exists'.format(args.table_name):
         raise sqlite3.OperationalError(*raiz.args)
 
-with open(dicpath, encoding='utf8') as f:
+with open(txtpath, encoding='utf8') as f:
     for l in f:
         l = l.strip()
       # print(l)
@@ -69,5 +85,5 @@ with open(dicpath, encoding='utf8') as f:
       # print(head, tail, sep='|')
         column = \
             {'id': None, 'head': head, 'tail': tail}
-        conn.insert('eijiro98', column)
+        conn.insert(args.table_name, column)
 conn.close()

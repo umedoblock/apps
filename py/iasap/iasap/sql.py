@@ -52,15 +52,18 @@ class GeneralSQLConnection(object):
         od['typename'] = table_name
         od['field_names'] = ''
         od['field_names'] = ' '.join(od.keys())
+        logger.debug('od.keys() = {}'.format(od.keys))
         self.insert('__namedtuples__', od)
-        logger.info('inserted __namedtuples__ table info '
+        logger.info('1: inserted __namedtuples__ table info '
                     'to __namedtuples__ table.')
 
     def create_table(self, table_info):
         cur = self.conn.cursor()
-        table_name = table_info.name
+        table_name = table_info["table_name"]
         columns = []
         for column_name, explain in table_info.items():
+            if column_name == "table_name":
+                continue
             column = ' '.join([column_name, explain])
             columns += [column]
         sql = 'create table {} ({})'.format(table_name, ', '.join(columns))
@@ -72,9 +75,12 @@ class GeneralSQLConnection(object):
         od = OrderedDict()
         od['id'] = None
         od['typename'] = table_name
-        od['field_names'] = ' '.join(table_info.keys())
+        L = list(table_info.keys())
+        logger.debug('list(table_info.keys()) = {}'.format(L))
+        L.remove("table_name")
+        od['field_names'] = ' '.join(L)
         self.insert('__namedtuples__', od)
-        logger.info('inserted {} table info '
+        logger.info('2: inserted {} table info '
                     'to __namedtuples__ table.'.format(table_name))
 
     def insert(self, table_name, columns=None):
@@ -143,6 +149,8 @@ class NamedRow(object):
         if not self.max_rows or self._i <= self.max_rows:
             row = self.cur.fetchone()
         if row:
+            logger.debug("row = {}".format(row))
+            logger.debug("self.namedtup = {}".format(self.namedtup))
             return self.namedtup(*row)
         else:
             self.cur.close()

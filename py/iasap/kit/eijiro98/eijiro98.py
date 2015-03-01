@@ -2,17 +2,11 @@
 
 # Copyright 2011-2014 梅濁酒(umedoblock)
 
-import os, sys
+import os
 
-def append_parent_dir(n_up):
-    here = os.path.abspath(__file__)
-    ups = ""
-    if n_up:
-        ups = os.path.join(*([".."] * n_up))
-    _parent_dir = os.path.join(os.path.dirname(here), ups)
-    sys.path.append(_parent_dir)
+import lib
 
-append_parent_dir(2)
+lib.sys_path_append_parent_dir(2)
 
 __file__ = os.path.abspath(__file__)
 dirname = os.path.dirname(__file__)
