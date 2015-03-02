@@ -1,4 +1,4 @@
-# Copyright 2011-2014 梅濁酒(umedoblock)
+-- Copyright 2011-2014 梅濁酒(umedoblock)
 
 /* index
 -- CREATE INDEX index_name ON table_name(field_name);

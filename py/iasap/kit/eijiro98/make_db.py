@@ -61,6 +61,7 @@ if os.path.isfile(dbpath):
 
     if s.lower() == "yes":
         os.remove(dbpath)
+        print("dbpath={}\nを削除しました。".format(dbpath))
     else:
         raise ValueError("起動 option --dbpath=xxx に適切な path を入力して下さい。")
 
@@ -74,6 +75,8 @@ except sqlite3.OperationalError as raiz:
     if raiz.args[0] != 'table {} already exists'.format(args.table_name):
         raise sqlite3.OperationalError(*raiz.args)
 
+print()
+print("dbpath={}\nに、sqlite3 形式の db を作成しています。".format(dbpath))
 with open(txtpath, encoding='utf8') as f:
     for l in f:
         l = l.strip()
