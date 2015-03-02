@@ -81,24 +81,11 @@ class Iasap(object):
         logger.debug('passed  time is {}'.format(d))
 
     def _make_sql(self, search):
-        if not self._isascii(search):
-            _sql = '''
-                    tail collate nocase like "%{}%"
-                  '''.format(search)
-        elif ' ' in search:
-            _sql = '''
-                    head collate nocase like "{}%"
-                    or
-                    tail collate nocase like "{} "
-                    or
-                    tail collate nocase like " {}"
-                  '''.format(search, search, search)
+        if self._isascii(search):
+            column = "head"
         else:
-            _sql = '''
-                    head collate nocase like "{}%"
-                    and
-                    head collate nocase not like "% %"
-                  '''.format(search)
+            column = "tail"
+        _sql = '''{} collate nocase like "%{}%"'''.format(column, search)
         sql = self._sql_template.format(_sql)
 
         return sql
