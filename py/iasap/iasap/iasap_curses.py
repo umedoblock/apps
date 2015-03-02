@@ -14,9 +14,6 @@ from iasap.lib import logger, start_logger
 
 __all__ = ["IasapCurses"]
 
-if __name__ == "__main__":
-    start_logger(__file__, os.path.curdir, logger.DEBUG)
-
 class OneLineState(object):
     def __init__(self, mode):
         self.oneline = ""
@@ -263,5 +260,7 @@ class IasapCurses(object):
         logger.debug("oneline_curses finished.")
 
 if __name__ == "__main__":
+    start_logger(__file__, os.path.curdir, logger.DEBUG)
+
     iac = IasapCurses(20)
     iac.run()
