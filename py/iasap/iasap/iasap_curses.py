@@ -239,18 +239,6 @@ class IasapCurses(object):
                                        width, curses.A_NORMAL)
                 except curses.error as raiz:
                     break
-                offset_y += 1
-                s = self.stdscr.instr(i + offset_y, 0).decode()
-                while s != " " * xmax:
-                    offset_y += 1
-                    s = self.stdscr.instr(i + offset_y, 0)
-                    if not s:
-                        break
-                offset_y -= 1
-            for i in range(1, ymax):
-                line = self.stdscr.instr(i, 0).decode()
-                self._effect_line(line, oneline, i, \
-                                  width, curses.A_REVERSE)
 
         self.stdscr.erase()
         curses.nocbreak()
