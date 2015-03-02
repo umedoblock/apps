@@ -20,18 +20,18 @@ parser = argparse.ArgumentParser(description='make eijiro98 database.')
 parser.add_argument('--txtpath', metavar='f', dest='txtpath',
                     required=True,
                     help='eijiro98.txt path')
+parser.add_argument('--table-name', metavar='t', dest='table_name',
+                    nargs='?',
+                    default='eijiro98',
+                    help='default: eijiro98')
 parser.add_argument('--dbpath', metavar='f', dest='dbpath',
                     nargs='?',
                     default=Eijiro98.DEFAULTS["dbpath"],
-                    help='default: eijiro98.sqlite')
-parser.add_argument('--table-name', metavar='t', dest='table_name',
-                    default='eijiro98',
-                    help='default table name is eijiro98.')
+                    help='default: {}'.format(Eijiro98.DEFAULTS["dbpath"]))
 parser.add_argument('--conf', metavar='f', dest='conf',
-                    nargs=1,
+                    nargs='?',
                     default=Eijiro98.DEFAULTS["conf"],
-                    help='eijiro98.conf default is {}'.format( \
-                          Eijiro98.DEFAULTS["conf"]))
+                    help='default: {}'.format(Eijiro98.DEFAULTS["conf"]))
 parser.add_argument('--debug', dest='debug',
                    action='store_true', default=False,
                    help='use debug ? (default: False)')
@@ -62,7 +62,7 @@ if os.path.isfile(dbpath):
     if s.lower() == "yes":
         os.remove(dbpath)
     else:
-        raise ValueError("dbpath に適切な値を入力して下さい。")
+        raise ValueError("起動 option --dbpath=xxx に適切な path を入力して下さい。")
 
 config = configparser.ConfigParser()
 config.read(confpath)
