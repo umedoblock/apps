@@ -120,7 +120,7 @@ class Iasap(object):
         return True
 
 def main(cls, script_name, table_name):
-    start_logger(script_name, os.path.curdir, logger.DEBUG)
+    start_logger(script_name, os.path.curdir, logger.INFO)
 
     kv_merged, kv_defaults, kv_argment = \
         merge_kv_by_defaults_and_argument(cls.DEFAULTS)
