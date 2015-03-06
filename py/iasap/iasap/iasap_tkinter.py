@@ -103,8 +103,9 @@ class IasapTkinter(object):
     def get_oneline(self, event):
         logger.debug("in get_oneline()")
         logger.debug("event.(type={}, keycode={}, keysysm={}, keysym_num={}, "
-                     "char={})".format(event.type, event.keycode, event.keysym,
-                      event.keysym_num, event.char))
+                     "char=\'{}\')".format(event.type, event.keycode,
+                                           event.keysym, event.keysym_num,
+                                           event.char))
         # index() が値を返す時、"y.x" の形式で、oneline の左端に cursor
         # がある時、返ってくる文字列は、"1.0"。
         # なので、y=1, x=0 が開始っぽい。変なの。こういう癖、好きじゃない。
