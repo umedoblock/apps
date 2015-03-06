@@ -146,13 +146,19 @@ class Iasap(object):
                 raise UnicodeEncodeError(*raiz.args)
         return True
 
-def main(cls, script_name, table_name):
-    start_logger(script_name, os.path.curdir, logger.INFO)
-
+def main(cls, script_name, table_name, log_level=logger.INFO):
+  # log_level = logger.DEBUG
+  # start_logger(script_name, os.path.curdir, log_level)
+    start_logger(script_name, log_dir=None, log_level=logger.DEBUG)
     kv_merged, kv_defaults, kv_argment = \
         merge_kv_by_defaults_and_argument(cls.DEFAULTS)
 
     kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"], table_name)
+    if kv["debug"]:
+        log_level = logger.DEBUG
+    log_level = logger.DEBUG
+    start_logger(script_name, log_dir=None, log_level=logger.DEBUG)
+#   start_logger(script_name, os.path.curdir, log_level)
 
     if not os.path.isfile(kv["dbpath"]):
         raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
