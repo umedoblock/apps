@@ -1,6 +1,6 @@
 # Copyright 2011-2014 梅濁酒(umedoblock)
 
-import sqlite3, os, sys, datetime
+import sqlite3, os, sys, datetime, re
 
 from iasap.iasap_tkinter import IasapTkinter
 from iasap.iasap_curses import IasapCurses
@@ -80,12 +80,39 @@ class Iasap(object):
         logger.debug('select   end at {}'.format(e))
         logger.debug('passed  time is {}'.format(d))
 
+    def _make_like(self, search):
+        """
+        >>> import re
+        >>> re.sub(" $", "%", " a ")
+        ' a%'
+        >>> re.sub("^ ", "%", " a ")
+        '%a '
+        >>> re.sub("^ ", "%", "  a  ")
+        '% a  '
+        >>> re.sub(" $", "%", "  a  ")
+        '  a %'
+        >>> re.sub(" $", "%", "a")
+        'a'
+        >>> re.sub("^ ", "%", "a")
+        'a'
+        >>> s = "  s  "
+        >>> re.sub("^ ", "%", s)
+        '% s  '
+        """
+        like_search = re.sub("^ ", "%", search)
+        like_search = re.sub(" $", "%", like_search)
+        logger.debug("search=\"{}\"".format(search))
+        logger.debug("like_search=\"{}\"".format(like_search))
+        return like_search
+
     def _make_sql(self, search):
         if self._isascii(search):
             column = "head"
         else:
             column = "tail"
-        _sql = '''{} collate nocase like "%{}%"'''.format(column, search)
+        like_search = self._make_like(search)
+
+        _sql = '''{} collate nocase like "{}"'''.format(column, like_search)
         sql = self._sql_template.format(_sql)
 
         return sql
