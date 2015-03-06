@@ -113,7 +113,8 @@ class IasapTkinter(object):
         logger.debug("cursor_yx={}".format(cursor_yx))
         line, column = self.to_int(cursor_yx)
 
-        current_oneline = self.oneline.get("1.0", tkinter.END).strip()
+        current_oneline = self.oneline.get("1.0", tkinter.END)
+        current_oneline = re.sub("\n$", "", current_oneline)
 
         query = current_oneline
         if line > 1:
