@@ -102,13 +102,13 @@ def _get_kv_by_argument(defaults=None):
 
     parser.add_argument('--conf', metavar='f', dest='conf',
                        default=defaults["conf"],
-                       help='conf path default is {}.'.format(defaults["conf"]))
+                       help='default conf path is {}.'.format(defaults["conf"]))
     parser.add_argument('--dbpath', metavar='f', dest='dbpath',
                        default=defaults["dbpath"],
-                       help='sqlite dbpath default is {}'.format(defaults["dbpath"]))
+                       help='default sqlite dbpath is {}'.format(defaults["dbpath"]))
     parser.add_argument('--mode', metavar='s', dest='mode',
                        default=defaults["mode"],
-                       help='iasap library default mode is tkinter, mode is tkinter, curses or one-shot.')
+                       help='default iasap library mode is tkinter, curses or one-shot.')
     parser.add_argument("--limit", metavar="N", dest="limit",
                          type=int, default=defaults["limit"],
                          help="max number of rows as select result, default is {}".format(defaults["limit"]))
