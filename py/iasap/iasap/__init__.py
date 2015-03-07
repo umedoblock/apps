@@ -149,18 +149,14 @@ class Iasap(object):
         return True
 
 def main(cls, script_name, table_name, log_level=logger.INFO):
-  # log_level = logger.DEBUG
-  # start_logger(script_name, os.path.curdir, log_level)
-    start_logger(script_name, log_dir=None, log_level=logger.DEBUG)
+    if "--debug" in sys.argv:
+        log_level = logger.DEBUG
+    start_logger(script_name, log_dir=os.sys.curdir, log_level=log_level)
+
     kv_merged, kv_defaults, kv_argment = \
         merge_kv_by_defaults_and_argument(cls.DEFAULTS)
 
     kv = set_kv_for_regular(kv_defaults, kv_argment, kv_merged["conf"], table_name)
-    if kv["debug"]:
-        log_level = logger.DEBUG
-    log_level = logger.DEBUG
-    start_logger(script_name, log_dir=None, log_level=logger.DEBUG)
-#   start_logger(script_name, os.path.curdir, log_level)
 
     if not os.path.isfile(kv["dbpath"]):
         raise OSError("cannot access \"{}\": No such file.".format(kv["dbpath"]))
