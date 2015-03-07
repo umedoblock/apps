@@ -56,9 +56,10 @@ class Iasap(object):
         self.start = _iasap.start
 
     def get_body(self, search):
-        sql = self._make_sql(search)
-        rows = self._do_select(sql)
-        logger.debug('search = "{}"'.format(search))
+        sql, like_search = self._make_sql(search)
+        tup = (like_search,)
+        rows = self._do_select(sql, tup)
+        logger.debug('like_search = "{}"'.format(like_search))
         if not search:
             return ''
         body = '\n'.join([text for text in self])
@@ -70,10 +71,11 @@ class Iasap(object):
         for line in body.split("\n"):
             print(line)
 
-    def _do_select(self, sql):
+    def _do_select(self, sql, values):
         logger.debug('sql = "{}"'.format(sql))
+        logger.debug('values = "{}"'.format(values))
         s = datetime.datetime.now()
-        self.named_rows = self.conn.select(sql)
+        self.named_rows = self.conn.select(sql, values)
         e = datetime.datetime.now()
         d = (e - s).total_seconds()
         logger.debug('select start at {}'.format(s))
@@ -112,10 +114,10 @@ class Iasap(object):
             column = "tail"
         like_search = self._make_like(search)
 
-        _sql = '''{} collate nocase like "{}"'''.format(column, like_search)
+        _sql = '''{} collate nocase like ?'''.format(column)
         sql = self._sql_template.format(_sql)
 
-        return sql
+        return sql, like_search
 
     def _make_sql_template(self, table_name, limit):
         _from_where = "* from {} where".format(table_name)

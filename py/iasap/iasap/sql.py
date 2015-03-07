@@ -93,10 +93,11 @@ class GeneralSQLConnection(object):
         cur.execute(sql_ + hatenas, values)
         cur.close()
 
-    def select(self, sql, max_rows=0):
+    def select(self, sql, values=None, max_rows=0):
         logger.debug(sql)
+        logger.debug(values)
 
-        return NamedRow(self.conn, sql, max_rows)
+        return NamedRow(self.conn, sql, values, max_rows)
 #       named_rows = []
 #       rows = cur.fetchall()
 #       cur.close()
@@ -107,8 +108,9 @@ class GeneralSQLConnection(object):
 #       return named_rows
 
 class NamedRow(object):
-    def __init__(self, conn, sql, max_rows):
+    def __init__(self, conn, sql, values=None, max_rows=0):
         self.sql = sql
+        self.values = values
         self.cur = conn.cursor()
         self.max_rows = max_rows
         self._i = 0
@@ -118,7 +120,10 @@ class NamedRow(object):
 
         namedtup = self._get_namedtuple(table_name)
 
-        result = self.cur.execute('select ' + sql)
+        if self.values:
+            result = self.cur.execute('select ' + sql, self.values)
+        else:
+            result = self.cur.execute('select ' + sql)
         self.namedtup = namedtup
         logger.info('NamedRow(self={})'.format(self))
 
