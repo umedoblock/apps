@@ -151,7 +151,7 @@ class Iasap(object):
 def main(cls, script_name, table_name, log_level=logger.INFO):
     if "--debug" in sys.argv:
         log_level = logger.DEBUG
-    start_logger(script_name, log_dir=os.path.curdir, log_level=log_level)
+        start_logger(script_name, log_dir=os.path.curdir, log_level=log_level)
 
     kv_merged, kv_defaults, kv_argment = \
         merge_kv_by_defaults_and_argument(cls.DEFAULTS)
