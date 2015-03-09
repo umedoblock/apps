@@ -1,4 +1,4 @@
-#!/home/umedoblock/local/bin/py3.3
+#!OS_SYS_EXECUTE
 
 # Copyright 2011-2015 梅濁酒(umedoblock)
 

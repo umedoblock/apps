@@ -3,9 +3,9 @@
 DB_PATH=./eijiroXXX.sqlite3
 
 # 英辞郎の一行形式の text file を sqlite3 形式の db に変換。
-time python3 ./make_db.py \
-           --txtpath=./eijiroXXX.txt \
-           --dbpath=${DB_PATH}
+OS_SYS_EXECUTE ./make_db.py \
+               --txtpath=./eijiroXXX.txt \
+               --dbpath=${DB_PATH}
 
 echo
 echo sqlite3 形式の db 作成後の大きさ

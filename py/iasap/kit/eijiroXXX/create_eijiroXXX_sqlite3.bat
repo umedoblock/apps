@@ -6,9 +6,9 @@ chcp 65001
 DB_PATH=./eijiroXXX.sqlite3
 
 rem 英辞郎の一行形式の text file を sqlite3 形式の db に変換。
-python3 ./make_db.py \
-        --txtpath=./eijiroXXX.txt ^
-        --dbpath=${DB_PATH}
+OS_SYS_EXECUTE ./make_db.py \
+               --txtpath=./eijiroXXX.txt ^
+               --dbpath=${DB_PATH}
 
 rem index 作成。
 sqlite3 ${DB_PATH} < ./create_index_on_eijiroXXX.sql
