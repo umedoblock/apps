@@ -20,9 +20,9 @@ if __name__ == "__main__":
 
     parser.add_argument("--xxx", metavar="n", dest="ver",
                        required=True,
-                       help=("お使いの英次郎辞書データの"
+                       help=("お使いの英辞郎辞書データの"
                              " Version を指定します。"
-                             "「英次郎辞書データVer98.」をお使いなら、"
+                             "「英辞郎辞書データVer98.」をお使いなら、"
                              "--xxx=98 とします。"))
     args = parser.parse_args()
 
