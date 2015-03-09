@@ -29,14 +29,14 @@ setup(
         'Topic :: Education',
     ],
     long_description = """\
-interactive as sonn as possible
+interactive as soon as possible (a.k.a asap)
 -------------------------------------
 迅速な回答を心がける、対話型辞書です。
 key-value store というと、分かりやすいでしょうか。
 incremental 検索機能付き辞書です。
 
-key には、英数字を想定しています。
-value には、日本語(=utf-8で非ascii文字)を想定しています。
+key は、英数字を想定しています。
+value は、日本語(=utf-8で非ascii文字)を想定しています。
 
 想定している具体的な使い方は、英語の辞書です。
 key に 英単語を、
