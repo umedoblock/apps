@@ -71,11 +71,12 @@ $ bash ./create_eijiro98_sqlite3.sh
 Linux 環境では、 create_eijiro98_sqlite3.bat を以下のように実行します。
 $ ./create_eijiro98_sqlite3.bat
 
-問題なく、 eijiro98.sqlite3 が作成されていれば、実行環境は整いました。
+IASAP_ROOT/kit/eijiro98 directory 以下に、
+eijiro98.sqlite3 が作成されていれば、実行環境は整いました。
 
 == 色々な mode
 以下のようにして実行すると、tkinter mode で iasap が起動します。
-$ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py
+$ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=tkinter
 
 以下のようにして実行すると、curses mode で iasap が起動します。
 $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=curses
@@ -84,24 +85,26 @@ $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=curses
 下の検索では、"arbitrary" の意味を調べています。
 $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=one-shot arbitrary
 
+--mode を指定しない場合、 tkinter mode で iasap が起動します。
+
 == 前方一致検索・後方一致検索
 下の検索では、"arbitrar" で後方一致検索をしています。
 $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=one-shot "arbitrar "
-空白一つが単語の最後に入っていることに注意してください。
+検索語の最後が空白一つであることに注意してください。
 
 下の検索では、"tly" で前方一致検索をしています。
 $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=one-shot " tly"
-空白一つが単語の先頭に入っていることに注意してください。
+検索語の先頭が空白一つであることに注意してください。
 
-tkinter mode, curses mode のどちらでも同じように、検索語の前後に空白を入れる
-ことで、前方一致検索・後方一致検索を実行することが出来ます。
+tkinter mode, curses mode でも同じように、検索語の前後に空白一つを入れ
+ることで、前方一致検索・後方一致検索を実行することが出来ます。
 
 == 例文検索
-下の検索では、"word" を含む例文を検索しています。
+下の検索では、例文に "word" を含む例文を検索しています。
 $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=one-shot "  word  "
-単語の前後に、連続する空白が2つずつ入っていることに注意してください。
+検索語の前後に、連続する空白が2つずつ入っていることに注意してください。
 
-下の検索では、"絶対に" を例文の日本語訳に含む英文を検索しています。
+下の検索では、例文の日本語訳に、"絶対に" を含む英文を検索しています。
 $ python3 IASAP_ROOT/kit/eijiro98/eijiro98.py --mode=one-shot " 絶対に "
 検索語の前後に、空白が1つずつ入っていることに注意してください。
 
