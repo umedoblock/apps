@@ -1,20 +1,20 @@
 # Copyright 2011-2015 梅濁酒(umedoblock)
 
 = 概要
-interactive as soon as possible (a.k.a asap)
+interactive as soon as possible (a.k.a iasap)
 
-asap は、key-value store 形式のテキスト検索を目的として開発しました。
-asap は、incremental 検索機能を実現しています。
+iasap は、key-value store 形式のテキスト検索を目的として開発しました。
+iasap は、incremental 検索機能を実現しています。
 
-asap は、key-value store の key, value の保存先として、sqlite3 を使用していま
+iasap は、key-value store の key, value の保存先として、sqlite3 を使用していま
 す。
-asap は、tkinter, curses, command prompt のいずれかで、対話的に検索できます。
-asap は、検索単語に空白を入力せずに検索すると、一致検索を実行します。
-asap は、検索単語の前に空白を入力すると前方一致検索、 検索単語の後に空白を入力
+iasap は、tkinter, curses, command prompt のいずれかで、対話的に検索できます。
+iasap は、検索単語に空白を入力せずに検索すると、一致検索を実行します。
+iasap は、検索単語の前に空白を入力すると前方一致検索、 検索単語の後に空白を入力
 すると後方一致検索、を実行します。
 
 = ライセンス
-asap のライセンスは、「Mit License」です。
+iasap のライセンスは、「Mit License」です。
 詳しくは、LICENSE.txt をご覧下さい。
 LICENSE.txt の参考として、LICENSE.ja.txt もご覧下さい。
 
