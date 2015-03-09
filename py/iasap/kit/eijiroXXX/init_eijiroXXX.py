@@ -37,6 +37,9 @@ if __name__ == "__main__":
     for old_basename in os.listdir("."):
         if old_basename == "init_eijiroXXX.py":
             continue
+        if old_basename.endswith("swp"):
+            # 糞 Vim !
+            continue
         new_basename = re.sub(PATTERN, ver, old_basename)
 
         old_path = os.path.join(".", old_basename)
