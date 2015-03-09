@@ -13,6 +13,8 @@ setup(
     download_url = "",
     license='MIT License',
     platforms=['unix', 'linux', 'osx', 'cygwin', 'win32'],
+    keywords=['tkinter', 'curses', 'sqlite3', 'key-value store',
+              'incremental search'],
     # see
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers = [

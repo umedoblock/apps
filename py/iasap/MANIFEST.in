@@ -1,0 +1,3 @@
+include README.txt LICENSE*.txt
+recursive-include iasap *.conf
+graft kit/eijiroXXX
