@@ -178,7 +178,7 @@ if __name__ == '__main__':
     conn.create_table(config['schema'])
     for id in range(0, 4):
         column = \
-            {'id': None, 'key': 'key' + str(id), 'tail': 'tail' + str(id)}
+            {'id': None, 'key': 'key' + str(id), 'value': 'value' + str(id)}
         conn.insert('iasap', column)
         print('id =', id, column)
 #   conn.commit()
@@ -188,5 +188,5 @@ if __name__ == '__main__':
     for i, named_row in enumerate(named_rows):
         nr = named_row
         print('i =', i, nr)
-      # print('i =', i, nr.id, nr.key, nr.tail)
+      # print('i =', i, nr.id, nr.key, nr.value)
     conn.close()

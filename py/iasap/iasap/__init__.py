@@ -111,7 +111,7 @@ class Iasap(object):
         if self._isascii(search):
             column = "key"
         else:
-            column = "tail"
+            column = "value"
         like_search = self._make_like(search)
 
         _sql = '''{} collate nocase like ?'''.format(column)
@@ -135,7 +135,7 @@ class Iasap(object):
             self.named_rows.cur.close()
             raise StopIteration
         nx = self.named_rows.__next__()
-        return '|'.join((nx.key, nx.tail))
+        return '|'.join((nx.key, nx.value))
 
     def _isascii(self, s):
         try:

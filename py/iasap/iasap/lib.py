@@ -44,10 +44,10 @@ def start_logger(script_name, log_dir=os.path.curdir, log_level=logger.INFO):
     horizontal = "=" * (CPPL - len(log_prefix))
     _now = datetime.datetime.now()
     body = "{} start! at {} ".format(basename, _now)
-    tail = "=" * (CPPL - (len(log_prefix) + len(body)))
+    value = "=" * (CPPL - (len(log_prefix) + len(body)))
 
     logger.info(horizontal)
-    logger.info(body + tail)
+    logger.info(body + value)
     logger.info(horizontal)
 
 def _merge_kv(first, second, third={}):

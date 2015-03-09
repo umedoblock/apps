@@ -41,11 +41,11 @@ CREATE TABLE __namedtuples__
                 typename text,
                 field_names text
             );
-CREATE TABLE eijiro98 (id integer primary key, key text, tail text);
+CREATE TABLE eijiro98 (id integer primary key, key text, value text);
 
 sqlite> select * from __namedtuples__;
 1|__namedtuples__|id typename field_names
-2|eijiro98|id key tail
+2|eijiro98|id key value
 
 sqlite> select * from eijiro98;
 1|#|~/backups/eijiro/eijiro98.txt
@@ -66,7 +66,7 @@ windowsでは飛ばします。
 $ sqlite3 ./iasap/iasap.sqlite3
 sqlite> select * from __namedtuples__;
 1|__namedtuples__|id typename field_names
-2|eijiro98|id key tail
+2|eijiro98|id key value
 sqlite> select count(*) from eijiro98;
 1711559
 sqlite> select * from eijiro98 limit 10;

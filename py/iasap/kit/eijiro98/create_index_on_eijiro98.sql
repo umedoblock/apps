@@ -6,5 +6,5 @@
 */
 CREATE  INDEX index_key
         ON eijiro98(key COLLATE NOCASE);
-CREATE  INDEX index_tail
-        ON eijiro98(tail COLLATE NOCASE);
+CREATE  INDEX index_value
+        ON eijiro98(value COLLATE NOCASE);
