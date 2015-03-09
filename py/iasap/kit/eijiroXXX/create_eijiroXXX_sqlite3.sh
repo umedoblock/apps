@@ -3,7 +3,7 @@
 DB_PATH=./eijiroXXX.sqlite3
 
 # 英辞郎の一行形式の text file を sqlite3 形式の db に変換。
-time py3.3 ./make_db.py \
+time python3 ./make_db.py \
            --txtpath=./eijiroXXX.txt \
            --dbpath=${DB_PATH}
 
