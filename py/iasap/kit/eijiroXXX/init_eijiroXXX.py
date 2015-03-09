@@ -31,7 +31,15 @@ if __name__ == "__main__":
     eijiroXXX_root = os.path.join("..", eijiroXXX)
     print("eijiroXXX_root =", eijiroXXX_root)
 
-    shutil.rmtree(eijiroXXX_root)
+    try:
+        shutil.rmtree(eijiroXXX_root)
+    except FileNotFoundError as e:
+      # print("e =", e)
+      # print("e.args =", e.args)
+        if e.args == (2, 'No such file or directory'):
+            pass
+        else:
+            raise FileNotFoundError(*e.args)
     os.mkdir(eijiroXXX_root)
 
     for old_basename in os.listdir("."):
