@@ -57,3 +57,4 @@ if __name__ == "__main__":
         shutil.copy(old_path, new_path)
         print(cmd)
         sed(new_path, PATTERN, ver)
+        sed(new_path, "OS_SYS_EXECUTE", os.sys.executable)
