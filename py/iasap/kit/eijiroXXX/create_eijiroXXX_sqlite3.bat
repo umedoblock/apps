@@ -7,7 +7,7 @@ DB_PATH=./eijiroXXX.sqlite3
 
 rem 英次郎の一行形式の text file を sqlite3 形式の db に変換。
 python3 ./make_db.py \
-        --txtpath=/home/umedoblock/backups/eijiro/eijiroXXX.txt ^
+        --txtpath=./eijiroXXX.txt ^
         --dbpath=${DB_PATH}
 
 rem index 作成。
