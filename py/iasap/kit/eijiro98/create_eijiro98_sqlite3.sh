@@ -22,7 +22,7 @@ ls -lh ${DB_PATH}
 echo
 sqlite3 ${DB_PATH} "select * from __namedtuples__"
 # 1|__namedtuples__|id typename field_names
-# 2|eijiro98|id head tail
+# 2|eijiro98|id key tail
 sqlite3 ${DB_PATH} "select count(*) from eijiro98"
 # 1637342
 sqlite3 ${DB_PATH} "select * from eijiro98 limit 10"

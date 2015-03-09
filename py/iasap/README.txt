@@ -41,11 +41,11 @@ CREATE TABLE __namedtuples__
                 typename text,
                 field_names text
             );
-CREATE TABLE eijiro98 (id integer primary key, head text, tail text);
+CREATE TABLE eijiro98 (id integer primary key, key text, tail text);
 
 sqlite> select * from __namedtuples__;
 1|__namedtuples__|id typename field_names
-2|eijiro98|id head tail
+2|eijiro98|id key tail
 
 sqlite> select * from eijiro98;
 1|#|~/backups/eijiro/eijiro98.txt
@@ -66,7 +66,7 @@ windowsでは飛ばします。
 $ sqlite3 ./iasap/iasap.sqlite3
 sqlite> select * from __namedtuples__;
 1|__namedtuples__|id typename field_names
-2|eijiro98|id head tail
+2|eijiro98|id key tail
 sqlite> select count(*) from eijiro98;
 1711559
 sqlite> select * from eijiro98 limit 10;
@@ -100,14 +100,14 @@ Enter ".help" for instructions
 Enter SQL statements terminated with a ";"
 sqlite> select count(*) from eijiro98;
 1711559
-sqlite> ^\^Hct id, head from eijiro98 where id >= 1637342;
+sqlite> ^\^Hct id, key from eijiro98 where id >= 1637342;
 
 74218
 
 >>> 1637342 + 74218
 1711560
 
-sqlite> select id,head from eijiro98 where id <= 1637342 limit 10;
+sqlite> select id,key from eijiro98 where id <= 1637342 limit 10;
 1|!
 2|"
 3|"Best Product of the Year" award
@@ -119,7 +119,7 @@ sqlite> select id,head from eijiro98 where id <= 1637342 limit 10;
 9|#1 | USE OF FIELD BY PERMIT ONLY
 10|$1 store
 
-sqlite> select id,head from eijiro98 where head = '!';
+sqlite> select id,key from eijiro98 where key = '!';
 1|!
 74218|!
 

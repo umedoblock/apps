@@ -2,7 +2,7 @@
 
 from pyeijiro import isascii
 count = 0
-f = open('head.txt')
+f = open('key.txt')
 for l in f.readlines():
   l = l.strip()
   if not isascii(l):

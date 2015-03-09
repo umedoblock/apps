@@ -16,7 +16,7 @@ sqlite3 ${DB_PATH} < ./create_index_on_eijiro98.sql
 sqlite3 ${DB_PATH} "select * from __namedtuples__"
 
 rem 1|__namedtuples__|id typename field_names
-rem 2|eijiro98|id head tail
+rem 2|eijiro98|id key tail
 sqlite3 ${DB_PATH} "select count(*) from eijiro98"
 rem 1637342
 sqlite3 ${DB_PATH} "select * from eijiro98 limit 10"

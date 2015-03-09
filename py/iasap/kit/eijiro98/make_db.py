@@ -81,12 +81,12 @@ with open(txtpath, encoding='utf8') as f:
     for l in f:
         l = l.strip()
       # print(l)
-        head, tail = re.findall('(.*) /// (.*)', l)[0]
-      # prefix, v0 = parse_head(head)
+        key, tail = re.findall('(.*) /// (.*)', l)[0]
+      # prefix, v0 = parse_key(key)
       # v1, suffix = parse_tail(tail)
       # print(prefix, v0, v1, suffix, sep='|')
-      # print(head, tail, sep='|')
+      # print(key, tail, sep='|')
         column = \
-            {'id': None, 'head': head, 'tail': tail}
+            {'id': None, 'key': key, 'tail': tail}
         conn.insert(args.table_name, column)
 conn.close()

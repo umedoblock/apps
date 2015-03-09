@@ -6,7 +6,7 @@ import time
 # wdict1 make time is 5.256090879440308
 # wdict2 make time is 3.7691729068756104
 
-name = 'head.txt'
+name = 'key.txt'
 f = open(name)
 lines = f.readlines()
 f.close()
