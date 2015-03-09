@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(
     name = "iasap",
     packages = ["iasap"],
-    version = "0.0.1",
+    version = "0.0.2",
     description = "interactive as sonn as possible",
     author = "梅濁酒(umedoblock)",
     author_email = "umedoblock@gmail.com",
@@ -31,7 +31,7 @@ setup(
         'Topic :: Education',
     ],
     long_description = """\
-| interactive as soon as possible (a.k.a asap)
+| interactive as soon as possible (a.k.a iasap)
 | --------------------------------------------
 | iasap は、key-value store 形式のテキスト検索を目的として開発しました。
 | iasap は、incremental 検索機能を実現しています。
