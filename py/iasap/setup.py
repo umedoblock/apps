@@ -6,7 +6,7 @@ setup(
     name = "iasap",
     packages = ["iasap"],
     version = "0.0.2",
-    description = "interactive as sonn as possible",
+    description = "interactive as soon as possible",
     author = "梅濁酒(umedoblock)",
     author_email = "umedoblock@gmail.com",
     url='http://pypi.python.org/pypi/iasap/',
