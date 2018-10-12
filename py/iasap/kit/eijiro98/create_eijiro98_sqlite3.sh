@@ -3,7 +3,7 @@
 DB_PATH=./eijiro98.sqlite3
 
 # 英辞郎の一行形式の text file を sqlite3 形式の db に変換。
-/home/umedoblock/local/bin/py3.3 ./make_db.py \
+/usr/bin/python3 ./make_db.py \
                --txtpath=./eijiro98.txt \
                --dbpath=${DB_PATH}
 

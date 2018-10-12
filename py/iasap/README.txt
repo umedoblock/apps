@@ -34,7 +34,7 @@ def /// ディーイーエフ
 ghi /// ジーエイチアイ
 
 以下では、一行テキスト形式の英辞郎辞書ファイルを
-eijiro98.txt
+eijiro98.dic
 と仮定して、iasapの使用方法を説明します。
 
 = 英辞郎を iasap で使えるようにするまで
@@ -61,9 +61,9 @@ $ python3 ./init_eijiroXXX.py --xxx=98
 $ cd ../eijiro98
 
 移動先の eijiro98 directory 以下に、一行テキスト形式の英辞郎辞書ファイルである、
-eijiro98.txt をコピーします。
+eijiro98.dic をコピーします。
 
-$ cp /tmp/eijiro98.txt .
+$ cp /tmp/eijiro98.dic .
 
 Linux 環境では、 create_eijiro98_sqlite3.sh を以下のように実行します。
 $ bash ./create_eijiro98_sqlite3.sh

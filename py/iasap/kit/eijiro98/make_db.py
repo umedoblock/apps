@@ -4,7 +4,7 @@ import sqlite3
 import argparse
 import configparser
 import re
-import os
+import os, sys
 
 import lib
 lib.sys_path_append_parent_dir(__file__, 2)
@@ -80,8 +80,13 @@ print("dbpath={}\nに、sqlite3 形式の db を作成しています。".format
 with open(txtpath, encoding='utf8') as f:
     for l in f:
         l = l.strip()
-      # print(l)
-        key, value = re.findall('(.*) /// (.*)', l)[0]
+        try:
+            key, value = re.findall('(.*) /// (.*)', l)[0]
+        except IndexError:
+            print("cannot convert", file=sys.stderr)
+            print(l, file=sys.stderr)
+            print("so skip this line", file=sys.stderr)
+            continue
       # prefix, v0 = parse_key(key)
       # v1, suffix = parse_value(value)
       # print(prefix, v0, v1, suffix, sep='|')
